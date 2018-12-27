@@ -1,0 +1,21 @@
+[ Structure ]
+
+ remap_all.py
+      |
+      !------ remap.exe  < namelist.nl
+                 |
+                 !------ src
+                          |
+                          |---- kinds.F90
+                          |---- buffer.F90
+                          |---- remap_matrix.F90
+                          !---- remapper_netcdf.F90
+                          !---- remapper.F90
+
+
+1) make
+
+2) remap.exe < namelists/namelist.nl
+
+3) post/draw.py
+

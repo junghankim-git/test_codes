@@ -1,0 +1,7 @@
+KIMDIR=/home/jhkim/Study/Library/Python/SVN/KIM
+SRCDIR=/home/jhkim/Study/Library/Python/SVN/newKIM
+
+(M) $KIMDIR/a.F90
+(M) $KIMDIR/b.F90
+(D) $KIMDIR/d.F90
+(A) $KIMDIR/e.F90

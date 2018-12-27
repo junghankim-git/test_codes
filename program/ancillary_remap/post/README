@@ -1,0 +1,22 @@
+[ Structure ]
+
+ draw.py
+   |
+   !------- class_draw_remap.py
+                      |
+                      !------- class_latlon_drawer.py
+
+
+[ vi draw.py ]
+
+#=============== clim_aerosol.nc
+# source file and target file(remaped file)
+title     = 'clim_aerosol' # just title
+srcfile   = '/data/KIM2.4/inputdata/ne120np4_rotated/clim_aerosol.nc'  # IN
+dstfile   = '/home/jhkim/Study/Library/Main/Remapper/clim_aerosol.nc'  # OUT
+# variable informations
+varnames  = ['BC', 'OC']
+ndims     = [3, 3]
+#varnames  = ['BC', 'OC', 'SO4', 'SEASALT', 'DUST']
+#ndims     = [3, 3, 3, 3, 3]
+#=============== clim_aerosol.nc

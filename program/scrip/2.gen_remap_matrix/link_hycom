@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rm -rf scrip_in
+ln -fs namelists/scrip_in_ne030r_240x193 ./scrip_in

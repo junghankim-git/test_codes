@@ -1,0 +1,110 @@
+ # Open 2 files
+   - stat:            0
+   - stat:            0
+  
+ # Read Variable: lats
+    => is same.
+ # Read Variable: lons
+    => is same.
+ # Read Variable: levs
+    => is same.
+ # Read Variable: hyam
+    => is same.
+ # Read Variable: hybm
+    => is same.
+ # Read Variable: ilevs
+    => is same.
+ # Read Variable: hyai
+    => is same.
+ # Read Variable: hybi
+    => is same.
+ # Read Variable: pdst
+    => is same.
+ # Read Variable: ps
+    => is same.
+ # Read Variable: ht
+    => is same.
+ # Read Variable: dht_1
+    => is same.
+ # Read Variable: dht_2
+    => is same.
+ # Read Variable: pds_2
+    => is same.
+ # Read Variable: pdsb
+    => is same.
+ # Read Variable: u
+    => is same.
+ # Read Variable: v
+    => is same.
+ # Read Variable: theta
+    => is same.
+ # Read Variable: omega
+    => is same.
+ # Read Variable: mub
+    => is same.
+ # Read Variable: pb
+    => is same.
+ # Read Variable: t_init
+    => is same.
+ # Read Variable: alb
+    => is same.
+ # Read Variable: mu_2
+    => is same.
+ # Read Variable: mu_2_w
+    => is same.
+ # Read Variable: p
+    => is same.
+ # Read Variable: alt
+    => is same.
+ # Read Variable: al
+    => is same.
+ # Read Variable: p8w
+    => is same.
+ # Read Variable: ph0
+    => is same.
+ # Read Variable: mut_w
+    => is same.
+ # Read Variable: rv_tendf1
+    => is diff.
+ # Read Variable: rv_tendf2
+    => is diff.
+ # Read Variable: rw_tendf
+    => is same.
+ # Read Variable: t_tendf
+    => is diff.
+ # Read Variable: T
+    => is same.
+ # Read Variable: w_2
+    => is same.
+ # Read Variable: mub_w
+    => is same.
+ # Read Variable: phb
+    => is same.
+ # Read Variable: p_phy
+    => is same.
+ # Read Variable: p_hyd_w
+    => is same.
+ # Read Variable: ph_2
+    => is same.
+ # Read Variable: mut
+    => is same.
+ # Read Variable: q
+    => is diff.
+ # Read Variable: qc
+    => is diff.
+ # Read Variable: qi
+    => is diff.
+ # Read Variable: qr
+    => is diff.
+ # Read Variable: qs
+    => is diff.
+ # Read Variable: oz
+    => is diff.
+ # Read Variable: cld
+    => is diff.
+ # Read Variable: cld_f
+    => is same.
+ # Close 2 files
+   - stat:            0
+   - stat:            0
+  

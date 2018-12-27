@@ -1,0 +1,19 @@
+# Compiler
+FC=gfortran
+FCFLAGS=-O2 -ffree-line-length-none -fcheck=all
+
+# Shared library
+BUILDDIR=/home/jhkim/work/program/scrip
+LIBNAME=shared
+ACV=-L$(BUILDDIR)/lib -l$(LIBNAME) -I$(BUILDDIR)/include
+TARGET=$(BUILDDIR)/lib/lib$(LIBNAME).a
+
+
+# External library
+#NETCDF_DIR=/opt/kiaps/apps/netcdf/4.1.3/gcc/4.5.3
+NETCDF_DIR=/app/compilers/gcc/4.7.1/applib1/NETCDF4/4.1.3
+NETCDF_INC=$(NETCDF_DIR)/include
+NETCDF_LIB=$(NETCDF_DIR)/lib
+EXTERNAL=-L$(NETCDF_LIB) -lnetcdff -lnetcdf -I$(NETCDF_INC)
+
+

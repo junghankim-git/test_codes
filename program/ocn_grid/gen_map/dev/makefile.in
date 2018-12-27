@@ -1,0 +1,12 @@
+
+FC=mpif90
+FCFLAGS=-O2 -fcheck=all -ffree-line-length-none
+
+NETCDF_DIR     = /app/compilers/gcc/4.7.1/applib1/NETCDF4/4.1.3
+NETCDF_INC_DIR = $(NETCDF_DIR)/include
+NETCDF_LIB_DIR = $(NETCDF_DIR)/lib
+LAPACK_DIR     = /app/compilers/gcc/4.7.1/applib1/LAPACK/3.4.1
+
+EXTERN_INC  = -I$(NETCDF_INC_DIR)
+EXTERN_LIB  = -L$(NETCDF_LIB_DIR) -lnetcdff -lnetcdf -L$(LAPACK_DIR) -llapack -lrefblas
+

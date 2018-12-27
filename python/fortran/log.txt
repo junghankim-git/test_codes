@@ -1,0 +1,99 @@
+# continuation
+
+ * marks
+  use, integer, 
+
+
+# end_type
+
+ A) end, enddo, endif,  (type = -1)
+
+     (case 1)
+          3 2 1
+     {...,6    }a = ...             0 0
+     {...,6,5  }if (xxx) then       0 0
+     {...,6,5,5}  if (xxx) then     2 2
+     {...,6,5  }  endif             2 0*
+     {...,6    }endif               0 0
+     {...,6    }@START              0 0
+
+     (case 2)
+          3 2 1
+     {...,6    }a =                 0 0
+     {...,6,5  }if (xxx) then       0 0
+     {...,6,5,6}  a = b             2 2
+     {...,6    }endif               0 0
+     {...,6    }@START              0 0
+
+     (case 3)
+          3 2 1
+     {.,6      }a = ..              0 0
+     {.,6,5    }if (xxx) then       0 0
+     {.,6,5,5  }  if (xxx) then     2 2
+     {.,6,5,5,5}    if (xxx) then   4 4
+     {.,6,5,5  }    endif           2 4*
+     {.,6,5    }  endif             0 2*
+     {.,6      }endif               0 0
+
+     (case 4)
+      5 4 3 2 1
+     {6        }a = ..              0 0
+     {6,5      }if (xxx) then       0 0
+     {6,5,5    }  if (xxx) then     2 2
+     {6,5,5,5  }    if (xxx) then   4 4
+     {6,5,5,5,6}      a = b         6 6
+     {6,5,5    }    endif           2 4*
+     {6,5      }  endif             0 2*
+     {6        }endif               0 0
+
+     (case 5)
+     {1          }
+     {1,2        }subroutine xxx
+     {1,2,5      }  interface myinter
+     {1,2,5,5    }    subroutine my_sub
+     {1,2,5,5,4  }    integer :: a
+     {1,2,5      }    end subroutine my_sub
+     {1,2        }  end interface
+     {1          }end subroutine
+
+     contains
+
+     {...,1    }program ..
+     {...,1,4  }integer :: 
+     {...,1    }contains
+     {...,1    }@START
+
+
+
+ B) else, case,         (type = 5, include end_type)
+
+     (case 1)
+     {...,6,5  }if (xxx) then
+     {...,6,5,6}  a = b
+     {...,6,5  }else
+     {...,6,5,6}  @START
+
+     (case 2)
+     {...,6,5  }case (a)
+     {...,6,5  }case (b)
+     {...,6,5,6}  @START
+
+     (case 3)
+     {...,5    }if (xxx) then
+     {...,5,5  }  if (xxx) then
+     {...,5,5,6}    a = b
+     {...,5,5  }  else
+     {...,5,5,6}    a = c
+     {...,5,5  }  endif
+     {...,5,   }else if(xxx) then
+     {...,5,6  }  @START
+
+
+     {.,6,5    }if (xxx) then       0 0
+     {.,6,5,5  }  if (xxx) then     2 2
+     {.,6,5,5,5}    if (xxx) then   4 4
+     {.,6,5,5  }    endif           2 4*
+     {.,6,5    }  endif             0 2*
+     {.,6      }endif               0 0
+
+

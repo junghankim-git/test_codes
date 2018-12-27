@@ -1,0 +1,146 @@
+#!/usr/bin/env python
+import os
+import sys
+import netCDF4 as nc
+sys.path.append('/home/jhkim/work/program/remapper/post')
+from class_latlon_drawer import *
+
+
+class class_draw_remap:
+
+
+
+  def __init__(self, src_LLfile, src_dimname, src_latname, src_lonname, dst_LLfile, dst_dimname, dst_latname, dst_lonname):
+
+    self.src_nsize = 0
+    self.src_lats  = []
+    self.src_lons  = []
+
+    self.dst_nsize = 0
+    self.dst_lats  = []
+    self.dst_lons  = []
+
+    print ' * draw_remap: read lat-lon information...'
+    self.src_nsize, self.src_lats, self.src_lons = self.read_latlon_info(src_LLfile, src_dimname, src_latname, src_lonname)
+    self.dst_nsize, self.dst_lats, self.dst_lons = self.read_latlon_info(dst_LLfile, dst_dimname, dst_latname, dst_lonname)
+
+
+
+  def set_variables(self, src_file, dst_file, varnames, ndims):
+
+    nvars = len(varnames)
+    if len(ndims) != nvars:
+      print 'check dimension of varnames and ndims... ', nvars, len(ndims)
+
+    self.nvars     = nvars
+    self.varnames  = varnames
+    self.src_vars  = [[] for i in range(nvars)]
+    self.dst_vars  = [[] for i in range(nvars)]
+
+    print ' * draw_remap: read variables...'
+    self.read_variables_in_file(src_file, varnames, ndims, self.src_vars)
+    self.read_variables_in_file(dst_file, varnames, ndims, self.dst_vars)
+
+
+
+
+
+  def draw(self, title, maptype=0):
+
+    ngrids = 2
+
+    print ' * draw_remap%latlon_drawer: Initialize ...'
+    drawer = class_latlon_drawer(ngrids, maptype=maptype, title=title)
+
+    print '  - draw_remap%latlon_drawer: add grid (source)...'
+    drawer.add_grid(self.src_lons, self.src_lats)
+    print '  - draw_remap%latlon_drawer: add grid (destination)...'
+    drawer.add_grid(self.dst_lons, self.dst_lats)
+    drawer.check_grid()
+
+    for iv in range(self.nvars):
+      print '  - draw_remap%latlon_drawer: add variable :', self.varnames[iv]
+      drawer.add_variable(self.varnames[iv], [self.src_vars[iv], self.dst_vars[iv]])
+
+    print '  - draw_remap%latlon_drawer: Draw...'
+    drawer.draw()
+    drawer.show()
+
+
+
+
+
+  def read_latlon_info(self, filename, dimname, latname, lonname):
+    # file open
+    infile = nc.Dataset(filename, mode='r')
+
+    # dimensions
+    nsize = len(infile.dimensions[dimname])
+
+    # allocate
+    lats = [0.0 for i in range(nsize)]
+    lons = [0.0 for i in range(nsize)]
+
+    # variables
+    lats = infile.variables[latname][:]
+    lons = infile.variables[lonname][:]
+
+    if min(lons)>=-2.0*np.pi and max(lons)<=2.0*np.pi:
+      use_radian = True
+    else:
+      use_radian = False
+
+    if use_radian:
+      lats[:] = lats[:]*180./np.pi
+      lons[:] = lons[:]*180./np.pi
+
+    for i in range(nsize):
+      if lons[i]<0:
+        lons[i] = lons[i]+360.0
+    
+    # close
+    infile.close()
+
+    return nsize, lats, lons
+
+
+
+
+  def read_variables_in_file(self, filename, varnames, ndims, vars):
+
+    nvars = len(varnames)
+    if len(ndims) != nvars or len(vars) != nvars:
+      print 'check dimensions of arguments... in read_variables_in_file.. ', nvars, len(ndims), len(vars)
+      quit()
+
+    # file open
+    infile = nc.Dataset(filename, mode='r')
+
+    i2 = 0
+    i3 = 0
+    i4 = 0
+    i5 = 0
+    for ivar in range(nvars):
+      tmp = infile.variables[varnames[ivar]]
+
+      if len(tmp) == 1:
+        tmp = tmp[0][:]
+
+      if   ndims[ivar] == 1:
+        vars[ivar] = tmp[:]
+      elif ndims[ivar] == 2:
+        vars[ivar] = tmp[i2][:]
+      elif ndims[ivar] == 3:
+        vars[ivar] = tmp[i3][i2][:]
+      elif ndims[ivar] == 4:
+        vars[ivar] = tmp[i4][i3][i2][:]
+      elif ndims[ivar] == 5:
+        vars[ivar] = tmp[i5][i4][i3][i2][:]
+      
+      vars[ivar] = vars[ivar].tolist()
+
+      del tmp    
+
+    # close
+    infile.close()
+

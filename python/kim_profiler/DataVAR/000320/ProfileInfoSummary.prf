@@ -1,0 +1,107 @@
+Stats for thread 0:
+                                                    On  Called Recurse   Wallclock          max          min     UTR Overhead
+  Total                                             -        1    -     899.880615   899.880615   899.880615         0.000000
+    Initialize HybDA                                -        1    -       1.261359     1.261359     1.261359         0.000000
+    Observation                                     -        1    -       1.932075     1.932075     1.932075         0.000000
+    Run HybDA                                       -        1    -     859.166870   859.166870   859.166870         0.000000
+      Check_HxmObs                                  -        1    -       0.086812     0.086812     0.086812         0.000000
+      Make_RHS_b                                    -        1    -      13.149275    13.149275    13.149275         0.000000
+        ModelToObs_Make_RHS_b                       -        1    -       0.063777     0.063777     0.063777         0.000000
+        TlmModelToEig_Make_RHS_b 1                  -        1    -       5.581824     5.581824     5.581824         0.000000
+          ModelToCtrl 1                             -        1    -       0.257434     0.257434     0.257434         0.000000
+          CtrlToSpec 1                              -        1    -       5.303127     5.303127     5.303127         0.000000
+          AfterCtrlToSpec 1                         -        1    -       0.014317     0.014317     0.014317         0.000000
+        TlmEigToObs_Make_RHS_b 1                    -        1    -       0.831366     0.831366     0.831366         0.000000
+          Run BeforeBcast 1                         -        1    -       0.001657     0.001657     0.001657         0.000000
+          Run Bcast4SpecToCtrl 1                    -        1    -       0.139339     0.139339     0.139339         0.000000
+          Run SpecToCtrl 1                          -        1    -       0.514055     0.514055     0.514055         0.000000
+          Run TlmCtrlToModel 1                      -        1    -       0.083385     0.083385     0.083385         0.000000
+          Run TlmModelToObs 1                       -        1    -       0.073457     0.073457     0.073457         0.000000
+        AdjEigToObs_Make_RHS_b 1                    -        1    -       6.378699     6.378699     6.378699         0.000000
+          Run AdjModelToObs 1                       -        1    -       0.120187     0.120187     0.120187         0.000000
+          Run AdjCtrlToModel 1                      -        1    -       1.978800     1.978800     1.978800         0.000000
+            Wrap_Repro_Sum_fromAdjCtrlToModel 1     -       53    -       0.018320     0.013967     0.000042         0.000004
+          Run AdjSpecToCtrl 1                       -        1    -       4.274365     4.274365     4.274365         0.000000
+            MatrixCalcul_fromAdjSpecToCtrl 1        -        1    -       1.357981     1.357981     1.357981         0.000000
+            Wrap_Repro_Sum_fromAdjSpecToCtrl 1      -        1    -       2.909938     2.909938     2.909938         0.000000
+          Run AfterAdjSpecToCtrl 1                  -        1    -       0.000745     0.000745     0.000745         0.000000
+      Check_Adj                                     -        1    -      11.504782    11.504782    11.504782         0.000000
+        TlmEigToObs_Check_Adj 2                     -        1    -       4.568408     4.568408     4.568408         0.000000
+          Run BeforeBcast 2                         -        1    -       0.000753     0.000753     0.000753         0.000000
+          Run Bcast4SpecToCtrl 2                    -        1    -       0.130331     0.130331     0.130331         0.000000
+          Run SpecToCtrl 2                          -        1    -       0.514186     0.514186     0.514186         0.000000
+          Run TlmCtrlToModel 2                      -        1    -       3.820490     3.820490     3.820490         0.000000
+          Run TlmModelToObs 2                       -        1    -       0.073355     0.073355     0.073355         0.000000
+        AdjEigToObs_Check_Adj 2                     -        1    -       6.469584     6.469584     6.469584         0.000000
+          Run AdjModelToObs 2                       -        1    -       0.188650     0.188650     0.188650         0.000000
+          Run AdjCtrlToModel 2                      -        1    -       1.867213     1.867213     1.867213         0.000000
+            Wrap_Repro_Sum_fromAdjCtrlToModel 2     -       53    -       0.019362     0.005475     0.000043         0.000004
+          Run AdjSpecToCtrl 2                       -        1    -       4.408130     4.408130     4.408130         0.000000
+            MatrixCalcul_fromAdjSpecToCtrl 2        -        1    -       0.863218     0.863218     0.863218         0.000000
+            Wrap_Repro_Sum_fromAdjSpecToCtrl 2      -        1    -       3.539989     3.539989     3.539989         0.000000
+          Run AfterAdjSpecToCtrl 2                  -        1    -       0.000952     0.000952     0.000952         0.000000
+        Wrap_Repro_Sum_Check_Adj 2                  -        1    -       0.021858     0.021858     0.021858         0.000000
+      Make_LHS_Ax0                                  -        1    -       4.328942     4.328942     4.328942         0.000000
+        TlmEigToObs_Make_Ax 3                       -        1    -       0.818345     0.818345     0.818345         0.000000
+          Run BeforeBcast 3                         -        1    -       0.001798     0.001798     0.001798         0.000000
+          Run Bcast4SpecToCtrl 3                    -        1    -       0.147119     0.147119     0.147119         0.000000
+          Run SpecToCtrl 3                          -        1    -       0.515573     0.515573     0.515573         0.000000
+          Run TlmCtrlToModel 3                      -        1    -       0.063887     0.063887     0.063887         0.000000
+          Run TlmModelToObs 3                       -        1    -       0.063979     0.063979     0.063979         0.000000
+        AdjEigToObs_Make_Ax 3                       -        1    -       3.344175     3.344175     3.344175         0.000000
+          Run AdjModelToObs 3                       -        1    -       0.195028     0.195028     0.195028         0.000000
+          Run AdjCtrlToModel 3                      -        1    -       0.123649     0.123649     0.123649         0.000000
+            Wrap_Repro_Sum_fromAdjCtrlToModel 3     -       53    -       0.019640     0.010664     0.000043         0.000004
+          Run AdjSpecToCtrl 3                       -        1    -       3.017225     3.017225     3.017225         0.000000
+            MatrixCalcul_fromAdjSpecToCtrl 3        -        1    -       0.906151     0.906151     0.906151         0.000000
+            Wrap_Repro_Sum_fromAdjSpecToCtrl 3      -        1    -       2.105711     2.105711     2.105711         0.000000
+          Run AfterAdjSpecToCtrl 3                  -        1    -       0.000825     0.000825     0.000825         0.000000
+      InnerProduct_r0                               -        1    -       0.035915     0.035915     0.035915         0.000000
+      Innerloop                                     -        1    -     817.100830   817.100830   817.100830         0.000000
+        Make_LHS_Ax                                 -       66    -     751.169312    12.047225    10.835474         0.000004
+          TlmEigToObs_Make_Ax 4                     -       66    -     303.313293     5.270756     4.314082         0.000004
+            Run BeforeBcast 4                       -       66    -       0.117064     0.002363     0.000760         0.000004
+            Run Bcast4SpecToCtrl 4                  -       66    -       8.251173     0.248309     0.097938         0.000004
+            Run SpecToCtrl 4                        -       66    -      33.980137     0.525445     0.513567         0.000004
+            Run TlmCtrlToModel 4                    -       66    -     255.034012     4.544148     3.601018         0.000004
+*             edge_pack                             -  7.4e+06    -       8.735637     0.007170     0.000000         0.502774
+*             edge_unpack                           -  7.4e+06    -       7.358862     0.007068     0.000000         0.502774
+*             ReproSumInt                           -   448839    -     380.423615     3.742582     0.000037         0.030521
+            Run TlmModelToObs 4                     -       66    -       4.415949     0.110132     0.063761         0.000004
+          AdjEigToObs_Make_Ax 4                     -       66    -     435.279175     7.021395     6.135434         0.000004
+            Run AdjModelToObs 4                     -       66    -      11.638391     0.276916     0.105226         0.000004
+            Run AdjCtrlToModel 4                    -       66    -     133.988419     2.441051     1.830539         0.000004
+              Wrap_Repro_Sum_fromAdjCtrlToModel 4   -     3498    -       0.709042     0.035715     0.000040         0.000238
+            Run AdjSpecToCtrl 4                     -       66    -     289.153290     4.656036     3.931509         0.000004
+              MatrixCalcul_fromAdjSpecToCtrl 4      -       66    -      64.870834     1.665608     0.829677         0.000004
+              Wrap_Repro_Sum_fromAdjSpecToCtrl 4    -       66    -     223.933670     3.749388     2.761774         0.000004
+            Run AfterAdjSpecToCtrl 4                -       66    -       0.054360     0.001126     0.000677         0.000004
+        InnerProduct_pAp                            -       66    -       4.440801     0.404481     0.008799         0.000004
+        InnerProduct_rirj                           -     2211    -       0.218899     0.013566     0.000057         0.000150
+        InnerProduct_rsnew                          -       66    -       0.003814     0.000248     0.000045         0.000004
+        Cal_CostFun                                 -        6    -      61.208927    10.434889    10.098030         0.000000
+          ModelToObs_Cal_CostFun                    -        6    -       0.428177     0.098144     0.063623         0.000000
+          TlmModelToEig_Cal_CostFun 2               -        6    -      33.251408     5.593062     5.490734         0.000000
+            ModelToCtrl 2                           -        6    -       0.745575     0.147153     0.085382         0.000000
+            CtrlToSpec 2                            -        6    -      32.206829     5.441087     5.343338         0.000000
+            AfterCtrlToSpec 2                       -        6    -       0.257690     0.063962     0.025325         0.000000
+          TlmEigToObs_Cal_CostFun 5                 -        6    -      27.437809     4.745612     4.471675         0.000000
+            Run BeforeBcast 5                       -        6    -       0.009933     0.001943     0.001303         0.000000
+            Run Bcast4SpecToCtrl 5                  -        6    -       0.763824     0.149266     0.114554         0.000000
+            Run SpecToCtrl 5                        -        6    -       3.086634     0.514871     0.513494         0.000000
+            Run TlmCtrlToModel 5                    -        6    -      23.069544     4.022537     3.725535         0.000000
+            Run TlmModelToObs 5                     -        6    -       0.394194     0.069346     0.064004         0.000000
+          Wrap_Repro_Sum_rmse_Cal_CostFun           -        6    -       0.011037     0.010455     0.000097         0.000000
+      TlmModelToEig_outer 3                         -        1    -       5.587793     5.587793     5.587793         0.000000
+        ModelToCtrl 3                               -        1    -       0.142270     0.142270     0.142270         0.000000
+        CtrlToSpec 3                                -        1    -       5.354374     5.354374     5.354374         0.000000
+        AfterCtrlToSpec 3                           -        1    -       0.083858     0.083858     0.083858         0.000000
+      TlmEigToModel_outer                           -        1    -       4.561801     4.561801     4.561801         0.000000
+        Run BeforeBcast                             -        1    -       0.001235     0.001235     0.001235         0.000000
+        Run Bcast4SpecToCtrl                        -        1    -       0.128194     0.128194     0.128194         0.000000
+        Run SpecToCtrl                              -        1    -       0.514943     0.514943     0.514943         0.000000
+        Run TlmCtrlToModel                          -        1    -       3.899866     3.899866     3.899866         0.000000
+      Check_RMSE                                    -        1    -       0.078193     0.078193     0.078193         0.000000
+        ModelToObs_Make_RMSE                        -        1    -       0.072337     0.072337     0.072337         0.000000
+        Repro_Sum_Make_RMSE                         -        1    -       0.004554     0.004554     0.004554         0.000000
+  t_prf                                             y        0    -       0.000000     0.000000     0.000000         0.000000

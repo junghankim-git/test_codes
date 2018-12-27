@@ -1,0 +1,20 @@
+
+1. check SCRIP inputs
+ cd 1.inputs
+ ls CS  (cubed sphere)
+ ls WW3 (Wave Watch III)
+
+ if no inputs then make input
+ cd 0.GenInputSCRIP_CS
+
+
+2. generate remapping matrix
+ cd 1.gen_remap_matrix
+
+
+3. check remapping matrix
+ cd 2.remap_matrix
+
+
+4. check remap field
+ cd 3.remapper

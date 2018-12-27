@@ -1,0 +1,162 @@
+#!/usr/bin/env python
+from numpy import *
+from scipy import *
+import matplotlib.pyplot as plt
+import matplotlib.mlab as mlab
+import time
+from matplotlib import cm
+import os
+import sys
+
+#print sys.argc
+#print sys.argv
+
+#npoints = int(sys.argv[1])
+####  Read Meta data            ####
+metafilename = 'info.dat'
+metafile = open(metafilename, 'r')
+npoints = int(metafile.readline())
+metafile.close()
+
+
+
+####  Initialization variables  ####
+xaxis   = array([0.0 for i in arange(npoints)])
+input   = array([[0.0]*npoints for i in arange(2)])
+output  = array([[0.0]*npoints for i in arange(2)])
+inputR  = array([[0.0]*npoints for i in arange(2)])
+
+
+####  Read input file           ####
+infilename = 'inData.dat'
+infile = open(infilename, 'r')
+for i in arange(npoints):
+   xaxis[i] = float(i)
+   line = infile.readline()
+   splitline = str(line).split()
+   input[0][i] = float(splitline[0])
+   input[1][i] = float(splitline[1])
+infile.close()
+
+####  Read output file          ####
+outfilename = 'outData.dat'
+outfile = open(outfilename, 'r')
+for i in arange(npoints):
+   xaxis[i] = float(i)
+   line = outfile.readline()
+   splitline = str(line).split()
+   output[0][i] = float(splitline[0])
+   output[1][i] = float(splitline[1])
+outfile.close()
+
+####  Read reverse file         ####
+inRfilename = 'inDataR.dat'
+inRfile = open(inRfilename, 'r')
+for i in arange(npoints):
+   xaxis[i] = float(i)
+   line = inRfile.readline()
+   splitline = str(line).split()
+   inputR[0][i] = float(splitline[0])
+   inputR[1][i] = float(splitline[1])
+inRfile.close()
+
+
+
+
+# - scale
+ymin11 = min(input[0])
+ymax11 = max(input[0])
+margin = (ymax11-ymin11)*0.1
+ymin11 = ymin11-margin
+ymax11 = ymax11+margin
+
+ymin12 = min(input[1])
+ymax12 = max(input[1])
+margin = (ymax12-ymin12)*0.1
+ymin12 = ymin12-margin
+ymax12 = ymax12+margin
+
+ymin21 = min(output[0])
+ymax21 = max(output[0])
+margin = (ymax21-ymin21)*0.1
+ymin21 = ymin21-margin
+ymax21 = ymax21+margin
+
+ymin22 = min(output[1])
+ymax22 = max(output[1])
+margin = (ymax22-ymin22)*0.1
+ymin22 = ymin22-margin
+ymax22 = ymax22+margin
+
+ymin31 = min(inputR[0])
+ymax31 = max(inputR[0])
+margin = (ymax31-ymin31)*0.1
+ymin31 = ymin31-margin
+ymax31 = ymax31+margin
+
+ymin32 = min(inputR[1])
+ymax32 = max(inputR[1])
+margin = (ymax32-ymin32)*0.1
+ymin32 = ymin32-margin
+ymax32 = ymax32+margin
+
+####  Plotting                  ####
+pltfig   = plt.figure(figsize=(10,10))
+suptitle = pltfig.suptitle('FFT', fontsize=18)
+
+# Plot (1,1)
+axis11 = pltfig.add_subplot(3,2,1)
+
+axis11.set_title('Input (real part)')
+#axis.set_xlabel(r'$M/M_H$')
+#axis.set_ylabel(r'$\frac{Nz}{U}$')
+#axis.set_xlim(xmin,xmax)
+axis11.set_ylim(ymin11,ymax11)
+#axM.plot(xaxis, input[0], '-', label=legend_labels[i])
+#axM.legend(shadow=True, loc=2)
+axis11.plot(xaxis, input[0], 'r-')
+
+
+# Plot (1,2)
+axis12 = pltfig.add_subplot(3,2,2)
+axis12.set_title('Input (imaginary part)')
+axis12.set_ylim(ymin12,ymax12)
+axis12.plot(xaxis, input[1], 'g-')
+
+
+# Plot (2,1)
+axis21 = pltfig.add_subplot(3,2,3)
+axis21.set_title('Output (real part)')
+axis21.set_ylim(ymin21,ymax21)
+axis21.plot(xaxis, output[0], 'r-')
+
+
+# Plot (2,2)
+axis22 = pltfig.add_subplot(3,2,4)
+axis22.set_title('Output (imaginary part)')
+axis22.set_ylim(ymin22,ymax22)
+axis22.plot(xaxis, output[1], 'g-')
+
+
+# Plot (2,1)
+axis31 = pltfig.add_subplot(3,2,5)
+axis31.set_title('InputR (real part)')
+axis31.set_ylim(ymin31,ymax31)
+axis31.plot(xaxis, inputR[0], 'r-')
+
+
+# Plot (2,2)
+axis32 = pltfig.add_subplot(3,2,6)
+axis32.set_title('InputR (imaginary part)')
+axis32.set_ylim(ymin32,ymax32)
+axis32.plot(xaxis, inputR[1], 'g-')
+
+
+
+
+
+
+outfilename = 'FFT.png'
+pltfig.savefig(outfilename)
+
+plt.show(True)

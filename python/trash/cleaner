@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+import os
+import sys
+import time
+from optparse import OptionParser
+
+opt = OptionParser()
+
+opt.add_option('-d', '--dir',     dest='dir',       default='./',  action='store',       help='Searching Drectory')
+opt.add_option('-e', '--ext',     dest='ext',       default=[],    action='append',      help='Extension of Files')
+opt.add_option('-x', '--exc',     dest='exc',       default=['.svn'], action='append',      help='Extension of Files')
+opt.add_option('-q', '--quiet',   dest='isQuiet',   default=True,  action='store_false', help='Print files')
+opt.add_option('-p', '--pattern', dest='isPrtPat',  default=True,  action='store_false', help='Print pattern')
+opt.add_option('-r', '--replace', dest='isReplace', default=False, action='store_true',  help='Replace word')
+opt.add_option('-m', '--move',    dest='isMove',    default=False, action='store_true',  help='Move file')
+
+(options, args) = opt.parse_args()
+
+trash_dir = '/scratch/jhkim/trash'
+
+ntrash  = len(args)
+isfiles = [False for i in range(ntrash)]
+
+date_dir = time.asctime()[4:].replace(' ', '_')
+
+target_dir = trash_dir + '/' + date_dir
+
+os.system('mkdir '+target_dir)
+if not os.path.isdir(target_dir):
+  print 'cannot make dir : ', target_dir
+
+for i in range(ntrash):
+   #lexist = os.path.isfile(args[i]) or os.path.isdir(args[i])
+   os.system('mv '+args[i]+' '+target_dir)

@@ -1,0 +1,17 @@
+&remap_inputs
+  num_maps = 2
+  grid1_file = '../1.inputs/CS/khkim_ne030_rotated.nc'
+  grid2_file = '../1.inputs/CS/khkim_ne060_rotated.nc'
+  interp_file1 = '../3.remap_matrix/CS_CS/ne030_rotated_to_ne060_rotated.nc'
+  interp_file2 = '../3.remap_matrix/CS_CS/ne060_rotated_to_ne030_rotated.nc'
+  map1_name = 'ne030np4 rotated'
+  map2_name = 'ne060np4 rotated'
+
+  map_method = 'conservative'
+  normalize_opt = 'fracarea'
+  output_opt = 'scrip'
+  restrict_type = 'latlon'
+  num_srch_bins = 90
+  luse_grid1_area = .false.
+  luse_grid2_area = .false.
+/

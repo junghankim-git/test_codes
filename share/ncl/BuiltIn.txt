@@ -1,0 +1,19 @@
+all				Returns True if all the elements of the input evaluate as True.
+any				Returns True if any of the values of its input evaluate as True.
+closest_val			Finds the index value in a monotonically increasing one dimensional array closest to a desired value.
+dimsizes			Returns the dimension sizes of the input variable.
+get1Dindex			Finds the indices of a one-dimensional array which exactly match a user specified list of values.
+getind_latlon2d			Finds the indices (subscripts) of two-dimensional latitude/longitude arrays closest to a user specified latitude/longitude coordinate pair.
+ind				Returns the indices where the input is True.
+ind_nearest_coord		Determine indices of locations closest to a coordinate array.
+isMonotonic			Check a one dimensional array to see if it is monotonic.
+local_max_1d			Determines the relative maxima for a 1-dimensional array.
+local_min_1d			Determines the relative minima for a 1-dimensional array.
+maxind				Returns the index of the first occurrence of a maximum value.
+minind				Returns the index of the first occurrence of a minimum value.
+month_to_annual			Converts monthly values to annual values.
+month_to_annual_weighted	Converts monthly values to annual values weighted by the number of days in a month.
+monthly_total_to_daily_mean	Convert monthly total values [eg, precipitation] to "per day" values.
+niceLatLon2D			Check two dimensional map coordinates to see if they have a "nice" structure.
+num				Counts the number of True values in the input.
+region_ind			Returns the indices (subscripts) of two-dimensional latitude/longitude arrays that span user specified latitude/longitude boundaries.

@@ -1,0 +1,773 @@
+ 
+ # default setting 
+  - capitailize            : True
+  - base horizontal intent : 3
+  - base vertical   intent : 0
+  - vertical intent mark   : !
+ 
+ 
+ # start f90 converter
+  - processing file : ./src/TestCode.F90
+line    =  module mymod
+type    =  1
+types   =  [0, 1]
+intents =  [0, 0]
+ctype   =  1
+cintent =  0
+ 
+line    =  end module mymod
+type    =  -1
+types   =  [0]
+intents =  [0]
+ctype   =  0
+cintent =  0
+ 
+line    =  !>  - JH KIM  : Added to "ghost_exchangeV" subroutine. (CAM-SE 5.3)
+type    =  -3
+types   =  [0]
+intents =  [0]
+ctype   =  0
+cintent =  0
+ 
+line    =  !-------------------------------------------------------------------------------
+type    =  -3
+types   =  [0]
+intents =  [0]
+ctype   =  0
+cintent =  0
+ 
+line    =  #include "KIM.h"
+type    =  -3
+types   =  [0]
+intents =  [0]
+ctype   =  0
+cintent =  0
+ 
+line    =  module testcode
+type    =  1
+types   =  [0, 1]
+intents =  [0, 0]
+ctype   =  1
+cintent =  0
+ 
+line    =  use mymodules1, only: var11, var12, var13
+type    =  3
+types   =  [0, 1, 3]
+intents =  [0, 0, 0]
+ctype   =  3
+cintent =  0
+ 
+line    =  use mymodules2, only: var11, var12, var13
+type    =  3
+types   =  [0, 1, 3]
+intents =  [0, 0, 0]
+ctype   =  3
+cintent =  0
+ 
+line    =  use mymodules3, only: fjdkl, fjdkla, gja, &
+type    =  3
+types   =  [0, 1, 3]
+intents =  [0, 0, 0]
+ctype   =  3
+cintent =  0
+ 
+line    =  fjdla, &
+type    =  -2
+types   =  [0, 1, 3]
+intents =  [0, 0, 0]
+ctype   =  3
+cintent =  0
+ 
+line    =  fdjalk, fjklda
+type    =  -2
+types   =  [0, 1, 3]
+intents =  [0, 0, 0]
+ctype   =  3
+cintent =  0
+ 
+line    =  implicit none
+type    =  3
+types   =  [0, 1, 3]
+intents =  [0, 0, 0]
+ctype   =  3
+cintent =  0
+ 
+line    =  private
+type    =  4
+types   =  [0, 1, 3, 4]
+intents =  [0, 0, 0, 0]
+ctype   =  4
+cintent =  0
+ 
+line    =  type my_type
+type    =  5
+types   =  [0, 1, 3, 4, 5]
+intents =  [0, 0, 0, 0, 0]
+ctype   =  5
+cintent =  0
+ 
+line    =  integer(i4) :: a, b
+type    =  4
+types   =  [0, 1, 3, 4, 5, 4]
+intents =  [0, 0, 0, 0, 0, 2]
+ctype   =  4
+cintent =  2
+ 
+line    =  integer(i4) :: c, d
+type    =  4
+types   =  [0, 1, 3, 4, 5, 4]
+intents =  [0, 0, 0, 0, 0, 2]
+ctype   =  4
+cintent =  2
+ 
+line    =  integer(i4) :: e, f
+type    =  4
+types   =  [0, 1, 3, 4, 5, 4]
+intents =  [0, 0, 0, 0, 0, 2]
+ctype   =  4
+cintent =  2
+ 
+line    =  integer(i4) :: g, h
+type    =  4
+types   =  [0, 1, 3, 4, 5, 4]
+intents =  [0, 0, 0, 0, 0, 2]
+ctype   =  4
+cintent =  2
+ 
+line    =  real(r8) :: fjdk, fjdkla
+type    =  4
+types   =  [0, 1, 3, 4, 5, 4]
+intents =  [0, 0, 0, 0, 0, 2]
+ctype   =  4
+cintent =  2
+ 
+line    =  end type
+type    =  -1
+types   =  [0, 1, 3, 4]
+intents =  [0, 0, 0, 0]
+ctype   =  4
+cintent =  0
+ 
+line    =  public :: ghost_exchangev_new
+type    =  4
+types   =  [0, 1, 3, 4]
+intents =  [0, 0, 0, 0]
+ctype   =  4
+cintent =  0
+ 
+line    =  interface my_interface
+type    =  5
+types   =  [0, 1, 3, 4, 5]
+intents =  [0, 0, 0, 0, 0]
+ctype   =  5
+cintent =  0
+ 
+line    =  module procedure my_sub1
+type    =  4
+types   =  [0, 1, 3, 4, 5, 4]
+intents =  [0, 0, 0, 0, 0, 2]
+ctype   =  4
+cintent =  2
+ 
+line    =  module procedure my_sub2
+type    =  4
+types   =  [0, 1, 3, 4, 5, 4]
+intents =  [0, 0, 0, 0, 0, 2]
+ctype   =  4
+cintent =  2
+ 
+line    =  module procedure my_sub3
+type    =  4
+types   =  [0, 1, 3, 4, 5, 4]
+intents =  [0, 0, 0, 0, 0, 2]
+ctype   =  4
+cintent =  2
+ 
+line    =  end interface myinterface
+type    =  -1
+types   =  [0, 1, 3, 4]
+intents =  [0, 0, 0, 0]
+ctype   =  4
+cintent =  0
+ 
+line    =  contains
+type    =  -1
+types   =  [0, 1]
+intents =  [0, 0]
+ctype   =  1
+cintent =  0
+ 
+line    =  subroutine my_sub()
+type    =  2
+types   =  [0, 1, 2]
+intents =  [0, 0, 0]
+ctype   =  2
+cintent =  0
+ 
+line    =  a = 2
+type    =  6
+types   =  [0, 1, 2, 6]
+intents =  [0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  end subroutine
+type    =  -1
+types   =  [0, 1]
+intents =  [0, 0]
+ctype   =  1
+cintent =  0
+ 
+line    =  subroutine my_sub0()
+type    =  2
+types   =  [0, 1, 2]
+intents =  [0, 0, 0]
+ctype   =  2
+cintent =  0
+ 
+line    =  end subroutine
+type    =  -1
+types   =  [0, 1]
+intents =  [0, 0]
+ctype   =  1
+cintent =  0
+ 
+line    =  subroutine my_sub1(a, b, c)
+type    =  2
+types   =  [0, 1, 2]
+intents =  [0, 0, 0]
+ctype   =  2
+cintent =  0
+ 
+line    =  use mymodule3, only: j, fj, jfkd
+type    =  3
+types   =  [0, 1, 2, 3]
+intents =  [0, 0, 0, 0]
+ctype   =  3
+cintent =  0
+ 
+line    =  implicit none
+type    =  3
+types   =  [0, 1, 2, 3]
+intents =  [0, 0, 0, 0]
+ctype   =  3
+cintent =  0
+ 
+line    =  type my_sub_t
+type    =  5
+types   =  [0, 1, 2, 3, 5]
+intents =  [0, 0, 0, 0, 0]
+ctype   =  5
+cintent =  0
+ 
+line    =  real :: abc
+type    =  4
+types   =  [0, 1, 2, 3, 5, 4]
+intents =  [0, 0, 0, 0, 0, 2]
+ctype   =  4
+cintent =  2
+ 
+line    =  end type my_sub_t
+type    =  -1
+types   =  [0, 1, 2, 3]
+intents =  [0, 0, 0, 0]
+ctype   =  3
+cintent =  0
+ 
+line    =  type(my_sub_t) :: mytt
+type    =  4
+types   =  [0, 1, 2, 3, 4]
+intents =  [0, 0, 0, 0, 0]
+ctype   =  4
+cintent =  0
+ 
+line    =  real(r8), dimension(:,:), allocatable :: a
+type    =  4
+types   =  [0, 1, 2, 3, 4]
+intents =  [0, 0, 0, 0, 0]
+ctype   =  4
+cintent =  0
+ 
+line    =  integer(i4) :: b, c
+type    =  4
+types   =  [0, 1, 2, 3, 4]
+intents =  [0, 0, 0, 0, 0]
+ctype   =  4
+cintent =  0
+ 
+line    =  a = 1
+type    =  6
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  if (xxx) then
+type    =  5
+types   =  [0, 1, 2, 3, 4, 6, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0]
+ctype   =  5
+cintent =  0
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  a = 1
+type    =  6
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  if (xxx) then
+type    =  5
+types   =  [0, 1, 2, 3, 4, 6, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0]
+ctype   =  5
+cintent =  0
+ 
+line    =  a = 2
+type    =  6
+types   =  [0, 1, 2, 3, 4, 6, 5, 6]
+intents =  [0, 0, 0, 0, 0, 0, 0, 2]
+ctype   =  6
+cintent =  2
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  a = 1
+type    =  6
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  if (xxx) then
+type    =  5
+types   =  [0, 1, 2, 3, 4, 6, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0]
+ctype   =  5
+cintent =  0
+ 
+line    =  if (xxx) then
+type    =  5
+types   =  [0, 1, 2, 3, 4, 6, 5, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0, 2]
+ctype   =  5
+cintent =  2
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2, 3, 4, 6, 5]
+intents =  [0, 0, 0, 0, 0, 0, 2]
+ctype   =  5
+cintent =  2
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  a = 1
+type    =  6
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  if (xxx) then
+type    =  5
+types   =  [0, 1, 2, 3, 4, 6, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0]
+ctype   =  5
+cintent =  0
+ 
+line    =  if (xxx) then
+type    =  5
+types   =  [0, 1, 2, 3, 4, 6, 5, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0, 2]
+ctype   =  5
+cintent =  2
+ 
+line    =  a = 2
+type    =  6
+types   =  [0, 1, 2, 3, 4, 6, 5, 5, 6]
+intents =  [0, 0, 0, 0, 0, 0, 0, 2, 4]
+ctype   =  6
+cintent =  4
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2, 3, 4, 6, 5]
+intents =  [0, 0, 0, 0, 0, 0, 2]
+ctype   =  5
+cintent =  2
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  a = 1
+type    =  6
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  if (xxx) then
+type    =  5
+types   =  [0, 1, 2, 3, 4, 6, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0]
+ctype   =  5
+cintent =  0
+ 
+line    =  if (xxx) then
+type    =  5
+types   =  [0, 1, 2, 3, 4, 6, 5, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0, 2]
+ctype   =  5
+cintent =  2
+ 
+line    =  if (xxx) then
+type    =  5
+types   =  [0, 1, 2, 3, 4, 6, 5, 5, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0, 2, 4]
+ctype   =  5
+cintent =  4
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2, 3, 4, 6, 5, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0, 4]
+ctype   =  5
+cintent =  4
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2, 3, 4, 6, 5]
+intents =  [0, 0, 0, 0, 0, 0, 4]
+ctype   =  5
+cintent =  4
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  a = 1
+type    =  6
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  if (xxx) then
+type    =  5
+types   =  [0, 1, 2, 3, 4, 6, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0]
+ctype   =  5
+cintent =  0
+ 
+line    =  if (xxx) then
+type    =  5
+types   =  [0, 1, 2, 3, 4, 6, 5, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0, 2]
+ctype   =  5
+cintent =  2
+ 
+line    =  if (xxx) then
+type    =  5
+types   =  [0, 1, 2, 3, 4, 6, 5, 5, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0, 2, 4]
+ctype   =  5
+cintent =  4
+ 
+line    =  a = 2
+type    =  6
+types   =  [0, 1, 2, 3, 4, 6, 5, 5, 5, 6]
+intents =  [0, 0, 0, 0, 0, 0, 0, 2, 4, 6]
+ctype   =  6
+cintent =  6
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2, 3, 4, 6, 5, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0, 4]
+ctype   =  5
+cintent =  4
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2, 3, 4, 6, 5]
+intents =  [0, 0, 0, 0, 0, 0, 4]
+ctype   =  5
+cintent =  4
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  return
+type    =  6
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  end subroutine my_sub1
+type    =  -1
+types   =  [0, 1]
+intents =  [0, 0]
+ctype   =  1
+cintent =  0
+ 
+line    =  function my_fun(a, b) result(d)
+type    =  2
+types   =  [0, 1, 2]
+intents =  [0, 0, 0]
+ctype   =  2
+cintent =  0
+ 
+line    =  use mymod1, only: dj, fj
+type    =  3
+types   =  [0, 1, 2, 3]
+intents =  [0, 0, 0, 0]
+ctype   =  3
+cintent =  0
+ 
+line    =  use mymod2
+type    =  3
+types   =  [0, 1, 2, 3]
+intents =  [0, 0, 0, 0]
+ctype   =  3
+cintent =  0
+ 
+line    =  implicit none
+type    =  3
+types   =  [0, 1, 2, 3]
+intents =  [0, 0, 0, 0]
+ctype   =  3
+cintent =  0
+ 
+line    =  include 'jfkdla.inc'
+type    =  3
+types   =  [0, 1, 2, 3]
+intents =  [0, 0, 0, 0]
+ctype   =  3
+cintent =  0
+ 
+line    =  integer(i4), dimension(:), intent(inout) :: a, b
+type    =  4
+types   =  [0, 1, 2, 3, 4]
+intents =  [0, 0, 0, 0, 0]
+ctype   =  4
+cintent =  0
+ 
+line    =  !local
+type    =  -3
+types   =  [0, 1, 2, 3, 4]
+intents =  [0, 0, 0, 0, 0]
+ctype   =  4
+cintent =  0
+ 
+line    =  integer(i4) :: i, n
+type    =  4
+types   =  [0, 1, 2, 3, 4]
+intents =  [0, 0, 0, 0, 0]
+ctype   =  4
+cintent =  0
+ 
+line    =  n = size(a)
+type    =  6
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  d = 0
+type    =  6
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  do i = 1, n
+type    =  5
+types   =  [0, 1, 2, 3, 4, 6, 5]
+intents =  [0, 0, 0, 0, 0, 0, 0]
+ctype   =  5
+cintent =  0
+ 
+line    =  d = a(i)+b(i)
+type    =  6
+types   =  [0, 1, 2, 3, 4, 6, 5, 6]
+intents =  [0, 0, 0, 0, 0, 0, 0, 2]
+ctype   =  6
+cintent =  2
+ 
+line    =  enddo
+type    =  -1
+types   =  [0, 1, 2, 3, 4, 6]
+intents =  [0, 0, 0, 0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  end function
+type    =  -1
+types   =  [0, 1]
+intents =  [0, 0]
+ctype   =  1
+cintent =  0
+ 
+line    =  subroutine testtest
+type    =  2
+types   =  [0, 1, 2]
+intents =  [0, 0, 0]
+ctype   =  2
+cintent =  0
+ 
+line    =  if (a.and.b) then
+type    =  5
+types   =  [0, 1, 2, 5]
+intents =  [0, 0, 0, 0]
+ctype   =  5
+cintent =  0
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2]
+intents =  [0, 0, 0]
+ctype   =  2
+cintent =  0
+ 
+line    =  if (a.and.b) then
+type    =  5
+types   =  [0, 1, 2, 5]
+intents =  [0, 0, 0, 0]
+ctype   =  5
+cintent =  0
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2]
+intents =  [0, 0, 0]
+ctype   =  2
+cintent =  0
+ 
+line    =  if (a.and.b) then
+type    =  5
+types   =  [0, 1, 2, 5]
+intents =  [0, 0, 0, 0]
+ctype   =  5
+cintent =  0
+ 
+line    =  endif
+type    =  -1
+types   =  [0, 1, 2]
+intents =  [0, 0, 0]
+ctype   =  2
+cintent =  0
+ 
+line    =  end subroutine testtest
+type    =  -1
+types   =  [0, 1]
+intents =  [0, 0]
+ctype   =  1
+cintent =  0
+ 
+line    =  subroutine test
+type    =  2
+types   =  [0, 1, 2]
+intents =  [0, 0, 0]
+ctype   =  2
+cintent =  0
+ 
+line    =  interface
+type    =  5
+types   =  [0, 1, 2, 5]
+intents =  [0, 0, 0, 0]
+ctype   =  5
+cintent =  0
+ 
+line    =  function f(x) result(f_x) ! function to be integrated
+type    =  2
+types   =  [0, 1, 2, 5, 2]
+intents =  [0, 0, 0, 0, 2]
+ctype   =  2
+cintent =  2
+ 
+line    =  use kiapsbase, only: real_kind=>kim_real8_kind
+type    =  3
+types   =  [0, 1, 2, 5, 2, 3]
+intents =  [0, 0, 0, 0, 2, 2]
+ctype   =  3
+cintent =  2
+ 
+line    =  real(real_kind), intent(in   ) :: x
+type    =  4
+types   =  [0, 1, 2, 5, 2, 3, 4]
+intents =  [0, 0, 0, 0, 2, 2, 2]
+ctype   =  4
+cintent =  2
+ 
+line    =  real(real_kind) :: f_x
+type    =  4
+types   =  [0, 1, 2, 5, 2, 3, 4]
+intents =  [0, 0, 0, 0, 2, 2, 2]
+ctype   =  4
+cintent =  2
+ 
+line    =  end function f
+type    =  -1
+types   =  [0, 1, 2]
+intents =  [0, 0, 0]
+ctype   =  2
+cintent =  0
+ 
+line    =  end interface
+type    =  -1
+types   =  [0, 1]
+intents =  [0, 0]
+ctype   =  1
+cintent =  0
+ 
+line    =  a = 1
+type    =  6
+types   =  [0, 1, 6]
+intents =  [0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  b = 2
+type    =  6
+types   =  [0, 1, 6]
+intents =  [0, 0, 0]
+ctype   =  6
+cintent =  0
+ 
+line    =  end subroutine test
+type    =  -1
+types   =  [0]
+intents =  [0]
+ctype   =  0
+cintent =  0
+ 

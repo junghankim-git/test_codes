@@ -1,0 +1,47 @@
+Total ranks in communicator=2502
+nthreads on rank 0=1
+'N' used for mean, std. dev. calcs.: 'ncalls'/'nthreads'
+'ncalls': number of times the region was invoked across tasks and threads.
+'nranks': number of ranks which invoked the region.
+mean, std. dev: computed using per-rank max time across all threads on each rank
+wallmax and wallmin: max, min time across tasks and threads.
+
+name                       ncalls nranks mean_time   std_dev   wallmax (rank  )   wallmin (rank  )
+total                        2502   2502 20042.383     0.111 20042.844 (   849) 20042.012 (  1764)
+set_atm_comp_driver          2502   2502     3.133     0.000     3.134 (   704)     3.133 (  2088)
+set_dynamics                 2502   2502     0.001     0.000     0.001 (  1311)     0.000 (  1845)
+set_physics                  2502   2502     0.000     0.000     0.000 (  2304)     0.000 (  2143)
+set_phy_main                 2502   2502     0.000     0.000     0.000 (  2304)     0.000 (   461)
+set_output                   2502   2502     0.001     0.000     0.002 (   349)     0.001 (  1994)
+ini_atm_comp_driver          2502   2502   187.905     0.003   187.916 (  1792)   187.901 (   752)
+ini_dynamics                 2502   2502     0.090     0.008     0.104 (   166)     0.065 (    14)
+dyn_edgepack_ini             2502   2502     0.000     0.000     0.000 (  1077)     0.000 (  1274)
+dyn_exchange_ini             2502   2502     0.000     0.000     0.010 (  1814)     0.000 (  1527)
+dyn_edgeunpack_ini           2502   2502     0.000     0.000     0.000 (  1079)     0.000 (    45)
+ini_physics                  2502   2502    95.232     0.001    95.234 (   850)    95.220 (  1814)
+ini_phy_main                 2502   2502    95.232     0.001    95.234 (   850)    95.220 (  1814)
+ini_phy_input                2502   2502    92.521     0.295    92.764 (   851)    91.811 (   260)
+run_phy_input                2502   2502     2.545     0.295     3.255 (   158)     2.305 (     0)
+ini_io_system                2502   2502     0.003     0.000     0.004 (     1)     0.001 (     0)
+write_io_system(ini)         2502   2502    41.201     0.092    41.348 (   846)    41.120 (   752)
+ini_coupling                 2502   2502     0.000     0.000     0.000 (  1740)     0.000 (     0)
+exchange_cpl              7.6e+07   2502     0.005     0.001     0.009 (    53)     0.004 (  1108)
+run_atm_comp_driver       7.6e+07   2502 19849.967     0.986 19850.488 (   847) 19801.062 (     0)
+run_dynamics              7.6e+07   2502 15266.141   121.167 15526.477 (  1705) 13925.665 (    13)
+update_dyn_output(run)    7.6e+07   2502     5.193     0.145     8.565 (  2226)     4.986 (     0)
+run_physics               7.6e+07   2502  3449.447   120.867  4791.026 (    13)  3188.797 (  1705)
+run_phy_main              7.6e+07   2502  3449.371   120.867  4790.944 (    13)  3188.719 (  1705)
+dyn_phy_cpl1              7.6e+07   2502   604.540     9.325   745.873 (     1)   584.596 (  1922)
+phy_main_interface        7.6e+07   2502  2190.117    76.857  3420.437 (     1)  1936.369 (  1699)
+phy_main_driver_ini       7.6e+07   2502     0.422     0.067     0.975 (  1421)     0.305 (  1146)
+phy_main_driver           7.6e+07   2502  1973.367    75.250  3133.432 (     2)  1731.225 (  1704)
+dyn_phy_cpl2              7.6e+07   2502   482.730    94.486  1920.888 (  1423)   407.769 (   674)
+update_phy_output(run)    7.6e+07   2502     9.937     0.119    10.438 (  1583)     9.628 (  1107)
+update_dyn_restart(run)   7.6e+07   2502     0.009     0.001     0.016 (  1475)     0.006 (  1539)
+update_phy_restart(run)   7.6e+07   2502     0.004     0.001     0.007 (  1020)     0.003 (   156)
+write_io_system(run)      7.6e+07   2502  1128.189     0.107  1128.462 (  1148)  1127.020 (  1422)
+fin_atm_comp_driver          2502   2502     0.009     0.001     0.013 (     0)     0.007 (   926)
+fin_dynamics                 2502   2502     0.000     0.000     0.000 (     1)     0.000 (     0)
+fin_physics                  2502   2502     0.000     0.001     0.002 (   119)     0.000 (   576)
+fin_phy_main                 2502   2502     0.000     0.001     0.002 (   119)     0.000 (   576)
+fin_io_system                2502   2502     0.000     0.000     0.000 (     4)     0.000 (    82)

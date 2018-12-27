@@ -1,0 +1,17 @@
+&remap_inputs
+ num_maps        = 2
+ grid1_file      = './scrip_1.nc'
+ grid2_file      = './scrip_2.nc'
+ interp_file1    = './remap_12.nc'
+ interp_file2    = './remap_21.nc'
+ map1_name       = 'Cubed-sphere on ne030 and np4(rotated)'
+ map2_name       = 'Cubed-sphere on ne030 and np4(unrotated)'
+ 
+ map_method      = 'conservative'
+ normalize_opt   = 'fracarea'
+ output_opt      = 'scrip'
+ restrict_type   = 'latlon'
+ num_srch_bins   = 90
+ luse_grid1_area = .false.
+ luse_grid2_area = .false.
+/

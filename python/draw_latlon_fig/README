@@ -1,0 +1,12 @@
+
+
+
+* infile
+
+
+* llfile
+ - input
+  - nofile -> infile -> nodim -> deffile
+                      - nodim -> deffile
+
+ - file == None -> deffile

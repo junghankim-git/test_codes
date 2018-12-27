@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+#-------------------------------------------------------------------------------
+# MODULE KiapsGrid
+#
+#> @brief
+#>  - show status of batch jobs
+#>
+#> @date 13JAN2015
+#>  - JH KIM(jh.kim@kiaps.org) : First written
+
+import os
+import sys
+import numpy as np
+from optparse import OptionParser
+#SHARE_DIR=os.environ['PYTHON_SHARE_DIR']
+SHARE_DIR='/home/jhkim/work/python'
+sys.path.append(SHARE_DIR+'/fortran/rename')
+from LibRename import *
+
+
+
+
+
+#===================================================================================
+#   MAIN
+#===================================================================================
+
+opt = OptionParser()
+
+# action: 'store', 'store_const', 'append', 'count', 'callback'
+opt.add_option('-d', '--dir',     dest='dir',       default='./',  action='store',       help='Searching Drectory')
+opt.add_option('-e', '--ext',     dest='ext',       default=[],    action='append',      help='Extension of Files')
+opt.add_option('-x', '--exc',     dest='exc',       default=[],    action='append',      help='Extension of Files')
+opt.add_option('-q', '--quiet',   dest='isQuiet',   default=True,  action='store_false', help='Print files')
+opt.add_option('-p', '--pattern', dest='isPrtPat',  default=True,  action='store_false', help='Print pattern')
+opt.add_option('-r', '--replace', dest='isReplace', default=False, action='store_true',  help='Replace word')
+opt.add_option('-m', '--move',    dest='isMove',    default=False, action='store_true',  help='Move file')
+
+(options, args) = opt.parse_args()
+
+
+#print options
+#print args
+
+#if not options.
+
+#if len(args) != 1:
+#  print 'check argument....'
+#  quit()
+
+print 'Options = ', options
+print 'Args    = ', args
+
+analysis = AnalysisFiles(options.dir, options.ext, options.exc, onQuiet=options.isQuiet, onPrtPattern=options.isPrtPat, onRpcPattern=options.isReplace, onMoveFile=options.isMove)
+analysis.RunProcess(args[0])
+
+
+print 'do: clean intent'
+print 'do: s/, /,/g in subroutine'
+
+print ' '
+print 'for Args :', args

@@ -1,0 +1,92 @@
+
+# Algorithm
+
+0. GenerateLine(line)
+ 1. '' pass
+ 2-1. type, isEnd, applied_line = Preprocess(line)
+  2-1-1. '!' or '#' => type = -3, isEnd = False, applied_line = line.strip() + '\n'
+  2-1-2.
+   2-1-2-1. ReplaceLineBefore
+   2-1-2-2. type, isEnd, indexes = GetTypeIndexes(uline, s_uline)
+    2-1-2-2-1. FindIndex
+    2-1-2-2-2. if   self.isContinuity: type=-2, isEnd=False, self.isContinuity = Fase
+    2-1-2-2-3. elif nmatched == 0 or indexes[0] != 0:
+    2-1-2-2-4. else:
+   2-1-2-3. make applied_line
+   2-1-2-4. '&' -> remove and isContinuity = True
+   2-1-2-5. ReplaceLineBefore
+ 2-2. applied_line              = SetHorizontalIntent(type, isEnd, applied_line)
+
+
+
+# EndType
+
+* linetype == -1
+
+ - case 0: type 0
+{{{
+module mymodule        types=[-1,0],    intents=[0,0],     ctype: 0, cintent=0
+end module mymodule    types=[-1],      intents=[0],       ctype:-1, cintent=0
+}}}
+
+ - case 1: type 1
+{{{
+ subroutine mysub      types=[0,1],     intents=[0,1],     ctype: 1, cintent=1
+ end subroutine mysub  types=[0],       intents=[0],       ctype: 0, cintent=0
+}}}
+
+ - case 2: type 4 (beforetype = intents[-1])
+{{{
+ b = 0                 types=[5],       intents=[4],       ctype: 5, cintent=4
+ DO j = 1              types=[5,4],     intents=[4,4],     ctype: 4, cintent=4
+   DO i = 1            types=[5,4,4],   intents=[4,4,6],   ctype: 4, cintent=6
+   END DO              types=[5,4],     intents=[4,4->6],  ctype: 4, cintent=4
+ END DO                types=[5],       intents=[4],       ctype: 5, cintent=4
+}}}
+
+ - case 3: normal
+{{{
+MODULE MYMODULE        types=[0],       intents=[0],       ctype: 0, cintent=0
+ USE MYMODULE          types=[0,2],     intents=[0,1],     ctype: 2, cintent=1
+ TYPE mytype_t         types=[0,2,4],   intents=[0,1,1],   ctype: 4, cintent=1
+   INTEGER :: a        types=[0,2,4,3], intents=[0,1,1,3], ctype: 3, cintent=3
+ END TYPE mytype_t     types=[0,2],     intents=[0,1],     ctype: 2, cintent=1
+END MODULE MYMODULE
+
+ b = 0                 types=[5],       intents=[4],       ctype: 5, cintent=4
+ DO j = 1              types=[5,4],     intents=[4,4],     ctype: 4, cintent=4
+   a(i,j) = b(i,j)     types=[5,4,5],   intents=[4,4,6],   ctype: 5, cintent=6
+ END DO                types=[5],       intents=[4],       ctype: 5, cintent=4
+}}}
+
+ - case 4: two type 4 (beforetype = intents[-2])
+{{{
+ b = 0                 types=[5],       intents=[4],       ctype: 5, cintent=4
+ DO j = 1              types=[5,4],     intents=[4,4],     ctype: 4, cintent=4
+   DO i = 1            types=[5,4,4],   intents=[4,4,6],   ctype: 4, cintent=6
+     a(i,j) = b(i,j)   types=[5,4,4,5], intents=[4,4,6,8], ctype: 5, cintent=8
+   END DO              types=[5,4],     intents=[4,4->6],  ctype: 4, cintent=6
+ END DO                types=[5],       intents=[4],       ctype: 5, cintent=4
+
+ b = 0                 types=[5],         intents=[4]
+ DO k = 1              types=[5,4],       intents=[4,4]
+   DO j = 1            types=[5,4,4],     intents=[4,4,6]
+     DO i = 1          types=[5,4,4,4],   intents=[4,4,6,8]
+       a(i,j) = b(i,j) types=[5,4,4,4,5], intents=[4,4,6,8,10]
+     END DO            types=[5,4,4]      intents=[4,4,6->8]
+   END DO              types=[5,4],       intents=[4,4->6?]
+ END DO                types=[5],         intents=[4]
+}}}
+
+
+
+* linetype != -1
+{{{
+ IF      (i == 1) THEN     ctype: 4, types=[5,4],   cintent=4, intents=[4,4]
+   a = 1                   ctype: 5, types=[5,4],   cintent=4, intents=[4,4]
+ ELSE IF (i == 1) THEN
+   a = 2
+ ELSE
+   a = 3
+ END IF
+}}}

@@ -1,0 +1,154 @@
+Job Id: 17381.gaon2_head001
+    Job_Name = mhs_np16_1
+    Job_Owner = sjha@login001
+    resources_used.cpupercent = 0
+    resources_used.cput = 00:09:51
+    resources_used.mem = 18478540kb
+    resources_used.ncpus = 16
+    resources_used.vmem = 29141236kb
+    resources_used.walltime = 00:00:39
+    job_state = E
+    queue = normal
+    server = gaon2_head001
+    Checkpoint = u
+    ctime = Tue Jan 13 10:41:47 2015
+    Error_Path = login001:/home/sjha/KPOP/Execute/mhs_np16_1.e17381
+    exec_host = node001/0*16
+    exec_vnode = (node001:ncpus=16)
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue Jan 13 10:47:15 2015
+    Output_Path = login001:/scratch/sjha/KPOP_Results/UM_bkg/mhs/np16_1/mhs_201
+	2110718.out
+    Priority = 0
+    qtime = Tue Jan 13 10:41:47 2015
+    Rerunable = True
+    Resource_List.mpiprocs = 16
+    Resource_List.ncpus = 16
+    Resource_List.nodect = 1
+    Resource_List.place = free
+    Resource_List.select = 1:ncpus=16:mpiprocs=16
+    Resource_List.walltime = 02:00:00
+    stime = Tue Jan 13 10:47:15 2015
+    session_id = 25199
+    Shell_Path_List = /bin/bash
+    jobdir = /home/sjha
+    substate = 51
+    Variable_List = FSTAT_AUX2=-1,FSTAT_AUX1=-1,
+	LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=4
+	0;33;01:cd=40;33;01:or=40;31;01:mi=01;05;37;41:su=37;41:sg=30;43:ca=30;
+	41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01
+	;31:*.taz=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.zip=
+	01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lz=01;31:*.xz=01;31:*
+	.bz2=01;31:*.tbz=01;31:*.tbz2=01;31:*.bz=01;31:*.tz=01;31:*.deb=01;31:*
+	.rpm=01;31:*.jar=01;31:*.rar=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31
+	:*.7z=01;31:*.rz=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35
+	:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;3
+	5:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=0
+	1;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv
+	=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.q
+	t=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.f
+	lc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xc
+	f=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.axv=01;35:*.a
+	nx=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=01;36:*.au=01;36:*.flac=01;36:*.
+	mid=01;36:*.midi=01;36:*.mka=01;36:*.mp3=01;36:*.mpc=01;36:*.ogg=01;36:
+	*.ra=01;36:*.wav=01;36:*.axa=01;36:*.oga=01;36:*.spx=01;36:*.xspf=01;36
+	:,INTEL_LICENSE_FILE=/app/compilers/intel/flexlm,
+	BACKGROUND_CAM_H=/data/kops/fcst/LETKF/bkg_data/001/gsH03.cam.h0.0003-
+	11-15-00000.nc,rtsv=10,FC=ifort,
+	NETCDF=/app/compilers/intel/2013.0.028/applib1/NETCDF4/4.1.3,
+	KPOP_BINDIR=/home/sjha/KPOP/Build/bin,QTDIR=/usr/lib64/qt-3.3,
+	FSTAT_PREV=0,ncpa=7,
+	LD_LIBRARY_PATH=/app/compilers/intel/2013.0.028/applib1/NETCDF4/4.1.3/
+	lib:/app/compilers/intel/2013.0.028/mpi/mvapich2/1.8.1/lib:/app/compile
+	rs/intel/2013.0.028/lib/intel64:/app/compilers/intel/2013.0.028/mkl/lib
+	/intel64:/app/compilers/intel/2013.0.028/debugger/lib/intel64:/app/comp
+	ilers/intel/2013.0.028/composer_xe_2013_sp1.0.080/ipp/lib/intel64:/usr/
+	local/lib:,BKGTYPE=UM_bkg,LANG=en_US.UTF-8,QTLIB=/usr/lib64/qt-3.3/lib,
+	BUFR_TABLES=/home/sjha/KPOP/Share/BUFR/bufrtables/,SHELL=/bin/bash,
+	JOB_PROC=-l select=1:ncpus=16:mpiprocs=16,
+	MPIHOME=/app/compilers/intel/2013.0.028/mpi/mvapich2/1.8.1,
+	QTINC=/usr/lib64/qt-3.3/include,G_BROKEN_FILENAMES=1,HISTSIZE=2000,
+	BACKGROUND_FILE_AUX2=/home/kops/data/fcst/GDPS/2012110712/ERLY/qwumgla
+	_pc006.nc,F90=ifort,PBS_O_WORKDIR=/home/sjha/KPOP/Execute,
+	_=/opt/pbs/default/bin/qsub,
+	MANPATH=/app/compilers/intel/2013.0.028/applib1/NETCDF4/4.1.3/share/ma
+	n:/app/compilers/intel/2013.0.028/man/en_US:/usr/share/man:/app/compile
+	rs/intel/2013.0.028/mpi/mvapich2/1.8.1/share/man,LETKF=NO,
+	COMPILER_PREFIX=/app/compilers/intel,SVN_EDITOR=vi,TIME_BINS=4,
+	PBS_O_SYSTEM=Linux,RTEMIS_PATH=/home/sjha/KPOP/Share/RTTOV/emis_data,
+	CC=icc,NPROC=16,BKG_SRC=B1,
+	CAMSE_TOPO_FILE=/home/sjha/KPOP/Main/KPOP_Bkgnd/camse_topo.nc,ATMS=F,
+	PBS_O_SHELL=/bin/bash,rttov_ver=10.2.0,Obstype=mhs,
+	MPIBASEDIR=/app/compilers/intel/2013.0.028/mpi,F77=ifort,
+	PBS_O_HOME=/home/sjha,
+	BACKGROUND_FILE_PREV=/data/kops/fcst/GDPS/2012110712/LATE/qwqu12.pp_00
+	6.2012110712.nc,CXX=icpc,SSH_TTY=/dev/pts/71,MVINTP=T2,HOSTNAME=login001,
+	CDTG=2012110718,
+	CAMSE_GRID_INDEX=/home/sjha/KPOP/Main/KPOP_Bkgnd/camse_latlon_index_ma
+	tch.txt,JOBNAME=mhs_np16_1,KPOP_STATSD=/home/sjha/KPOP/Monitor/Stats,
+	PBS_O_LANG=en_US.UTF-8,ASSIM_WIN=6,
+	SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass,EXP_NAME=np16_1,
+	KPOP_EXEDIR=/home/sjha/KPOP/Execute,
+	module=() {  eval `/usr/bin/modulecmd bash $*`; },
+	LESSOPEN=|/usr/bin/lesspipe.sh %s,PBS_O_LOGNAME=sjha,
+	PBS_O_PATH=/app/compilers/intel/2013.0.028/applib1/NETCDF4/4.1.3/bin:/
+	app/compilers/intel/2013.0.028/mpi/mvapich2/1.8.1/bin:/app/compilers/in
+	tel/2013.0.028/bin:/app/applications/A2PS/bin:/app/software/understand/
+	scitools/bin/linux64:/app/software/idl/idl82/bin:/app/software/matlab/b
+	in:/opt/pbs/default/bin:/opt/pbs/default/sbin:/app/software/understand/
+	scitools/bin/linux64:/app/software/maple/bin:/usr/lib64/qt-3.3/bin:/usr
+	/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/ibutils/b
+	in:/home/sjha/bin,SSH_CLIENT=172.16.20.88 50226 22,CVS_RSH=ssh,
+	LOGNAME=sjha,USER=sjha,HOME=/home/sjha,
+	PATH=/app/compilers/intel/2013.0.028/applib1/NETCDF4/4.1.3/bin:/app/co
+	mpilers/intel/2013.0.028/mpi/mvapich2/1.8.1/bin:/app/compilers/intel/20
+	13.0.028/bin:/app/applications/A2PS/bin:/app/software/understand/scitoo
+	ls/bin/linux64:/app/software/idl/idl82/bin:/app/software/matlab/bin:/op
+	t/pbs/default/bin:/opt/pbs/default/sbin:/app/software/understand/scitoo
+	ls/bin/linux64:/app/software/maple/bin:/usr/lib64/qt-3.3/bin:/usr/local
+	/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/ibutils/bin:/ho
+	me/sjha/bin,
+	CAMSE_REDUCED_GRID=/home/sjha/KPOP/Main/KPOP_Bkgnd/camse_latlon_reduce
+	d.txt,CDTG_BACKGROUND=2012110712,COMPILER=intel,TERM=xterm,MPI_VER=1.8.1,
+	BACKGROUND_CAM_R=/data/kops/fcst/LETKF/bkg_data/001/gsH03.cam.r.0003-1
+	1-15-00000.nc,SHLVL=3,
+	OBSERVATION_REPOSITORY=/data/kops/bufr/bufr_ODB/2012110718/LATE,
+	COMPILER_VER=2013.0.028,
+	BACKGROUND_FILE_AUX1=/home/kops/data/fcst/GDPS/2012110712/ERLY/qwumgla
+	_pe006.nc,LOCAL_COEFD=/home/sjha/KPOP/Gen/Coef,LAT_RES=769,EDITOR=vim,
+	MPICH_HOME=/app/compilers/intel/2013.0.028/mpi/mvapich2/1.8.1,
+	MODULESHOME=/usr/share/Modules,
+	CLDAER_PATH=/home/sjha/KPOP/Share/RTTOV/rtcoef_rttov10/cldaer,
+	LON_RES=1024,CALHGTM=R2,KPOP_HOME=/home/sjha/KPOP,
+	KPOP_OUTPUT=/scratch/sjha/KPOP_Results/UM_bkg/mhs/np16_1,
+	MV2_USE_AFFINITY=0,
+	MPI_HOME=/app/compilers/intel/2013.0.028/mpi/mvapich2/1.8.1,
+	MV2_ENABLE_AFFINITY=0,
+	ASSIM_CARDD=/home/sjha/KPOP/Gen/assimilate_cards,
+	PBS_O_MAIL=/var/spool/mail/sjha,
+	RTTOV_COEFD=/home/sjha/KPOP/Share/RTTOV/rtcoef_rttov10/rttov7pred51L,
+	MODULEPATH=/app/Modules/applications:/app/Modules/compilers:/app/Modul
+	es/information:/app/Modules/modulefiles/intel,Upptype=MHS,
+	SSH_CONNECTION=172.16.20.88 50226 118.128.66.201 22,
+	DISPLAY=localhost:69.0,VERT_RES=70,MAIL=/var/spool/mail/sjha,
+	TBIN_AUX1=4,FORTRAN_TYPE=intel,
+	LOADEDMODULES=intel/2013:PrgEnv-intel/1.1:mvapich2/1.8.1:netcdf/4.1.3,
+	RTTOV_MIETD=/home/sjha/KPOP/Share/RTTOV/rtcoef_rttov10/mietable,
+	MPI=mvapich2,HISTCONTROL=ignoredups,rttov_coef=rttov7pred51L,
+	PWD=/home/sjha/KPOP/Execute,WSTATION=G2,
+	_LMFILES_=/app/Modules/compilers/intel/2013:/app/Modules/compilers/Prg
+	Env-intel/1.1:/app/Modules/modulefiles/intel/mvapich2/1.8.1:/app/Module
+	s/modulefiles/intel/netcdf/4.1.3,MV2_ON_DEMAND_THRESHOLD=2048,
+	RDBGFIELD_TABLE=/home/sjha/KPOP/Main/KPOP_Bkgnd/BG_ingest_Fields.tbl,
+	PBS_O_QUEUE=normal,PBS_O_HOST=login001
+    comment = Job run at Tue Jan 13 at 10:47 on (node001:ncpus=16)
+    etime = Tue Jan 13 10:41:47 2015
+    Exit_status = 0
+    Submit_arguments = -S /bin/bash -V -j oe -o /scratch/sjha/KPOP_Results/UM_b
+	kg/mhs/np16_1/mhs_2012110718.out -N mhs_np16_1 -l walltime=2:00:00 -l s
+	elect=1:ncpus=16:mpiprocs=16 /home/sjha/KPOP/Execute/mhs.sh
+    project = _pbs_project_default
+

@@ -1,0 +1,57 @@
+#!/usr/bin/env python
+
+import os
+import sys
+from optparse import OptionParser
+
+# load My Class
+SHARE_DIR='/home/jhkim/work/share/python'
+sys.path.append(SHARE_DIR)
+from class_draw_unstruct import *
+
+opt = OptionParser()
+opt.add_option('-v', '--variable', dest='varnames', default=[],    action='append',      help='list of variables')
+#opt.add_option('-t', '--title',    dest='title',   default='',    action='store',       help='title of figure')
+opt.add_option('-l', '--llfile',   dest='llfile',   default=None,  action='store',       help='lat-lon info file')
+opt.add_option('-x', '--lonname',  dest='lonname',  default=None,  action='store',       help='lon dimension name')
+opt.add_option('-y', '--latname',  dest='latname',  default=None,  action='store',       help='lat dimension name')
+opt.add_option('-f', '--figure',   dest='figname',  default=None,  action='store',       help='output file name')
+opt.add_option('-c', '--colorbar', dest='colorbar', default=False, action='store_true',  help='draw the colorbar (on/off)')
+opt.add_option('-g', '--grid',     dest='grid',     default=False, action='store_true',  help='draw the grid (on/off)')
+opt.add_option('-q', '--quality',  dest='quality',  default=0,     action='store',       help='figure quality (1~5)')
+opt.add_option('-z', '--llfile2',  dest='llfile2',  default=None,  action='store',       help='lat-lon info file2')
+opt.add_option('-p', '--np',       dest='np',       default=3,     action='store',       help='np: 3 or 4')
+
+
+(opts, args) = opt.parse_args()
+
+if len(args) < 1:
+    print 'insert infile name.'
+    quit()
+
+infile   = args[0]
+infiles  = [infile]
+llfiles  = [opts.llfile]
+latnames = [opts.latname]
+lonnames = [opts.lonname]
+if len(args) > 1:
+    infile2 = args[1]
+    infiles.append(infile2)
+    llfiles.append(opts.llfile2)
+    latnames.append(opts.latname)
+    lonnames.append(opts.lonname)
+
+if len(opts.varnames) < 1:
+    print 'insert varname.'
+    quit()
+
+
+nqp = int(opts.np)
+# plots
+remap = class_draw_interface(infiles,llfiles,nqp)
+remap.set_variables(opts.varnames)
+remap.set_coordinates(latnames,lonnames)
+remap.draw('',0,opts.figname,opts.grid,opts.colorbar,int(opts.quality))
+
+
+

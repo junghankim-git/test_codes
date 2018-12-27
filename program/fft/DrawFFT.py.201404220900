@@ -1,0 +1,142 @@
+#!/usr/bin/env python
+from numpy import *
+from scipy import *
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+import time
+from matplotlib import cm
+import os
+import sys
+
+
+
+####  Read Meta data            ####
+metafilename = 'info.dat'
+metafile = open(metafilename, 'r')
+npoints = int(metafile.readline())
+zmin    = float(metafile.readline())
+zmax    = float(metafile.readline())
+metafile.close()
+
+nplot = 3
+npart = 2
+
+
+####  Initialization variables  ####
+x = array([[0.0 for i in arange(npoints)] for j in range(nplot)])
+datatmp = array([[[0.0]*npoints for i in arange(npart)] for j in arange(nplot)])
+
+
+####  Read input file           ####
+for i in arange(nplot):
+  for j in arange(npoints):
+    if i == 1:
+      x[i][j] = float(j)
+    else:
+      x[i][j] = (zmax-zmin)*float(j)/npoints + zmin
+
+infilename = 'inData.dat'
+infile = open(infilename, 'r')
+for i in arange(npoints):
+   line = infile.readline()
+   splitline = str(line).split()
+   datatmp[0][0][i] = float(splitline[0])
+   datatmp[0][1][i] = float(splitline[1])
+infile.close()
+
+####  Read datatmp[1] file          ####
+outfilename = 'outData.dat'
+outfile = open(outfilename, 'r')
+for i in arange(npoints):
+#   x[i] = float(i)
+   line = outfile.readline()
+   splitline = str(line).split()
+   datatmp[1][0][i] = float(splitline[0])
+   datatmp[1][1][i] = float(splitline[1])
+outfile.close()
+
+####  Read reverse file         ####
+inRfilename = 'inDataR.dat'
+inRfile = open(inRfilename, 'r')
+for i in arange(npoints):
+#   x[i] = float(i)
+   line = inRfile.readline()
+   splitline = str(line).split()
+   datatmp[2][0][i] = float(splitline[0])
+   datatmp[2][1][i] = float(splitline[1])
+inRfile.close()
+
+
+
+
+# - scale
+xmin   = array([0.0 for i in arange(nplot)])
+xmax   = array([0.0 for i in arange(nplot)])
+ymin   = array([[0.0]*npart for i in arange(nplot)])
+ymax   = array([[0.0]*npart for i in arange(nplot)])
+title  = array([[' '*25]*npart for i in arange(nplot)])
+color  = ['r-', 'g-']
+
+
+for i in range(nplot):
+  if i == 1:
+    xmin[i] = 0
+    xmax[i] = npoints
+  else:
+    xmin[i] = zmin
+    xmax[i] = zmax
+  for j in range(npart):
+    ymin[i][j] = min(datatmp[i][j])
+    ymax[i][j] = max(datatmp[i][j])
+    margin = (ymax[i][j]-ymin[i][j])*0.1
+    ymin[i][j] = ymin[i][j]-margin
+    ymax[i][j] = ymax[i][j]+margin
+    if ymin[i][j] == ymax[i][j]:
+      ymin[i][j] = -0.01
+      ymax[i][j] =  0.01
+    if i == 0:
+      title[i][j] = 'Input ['
+    elif i == 1:
+      title[i][j] = 'Output ['
+    elif i == 2:
+      title[i][j] = 'InputR ['
+    if j == 0:
+      title[i][j] = title[i][j] + 'real part]'
+    elif j == 1:
+      title[i][j] = title[i][j] + 'imaginary part]'
+
+
+
+####  Plotting                  ####
+pltfig   = plt.figure(figsize=(10,10))
+pltfig.suptitle('FFT', fontsize=18)
+
+#gs = gridspec.GridSpec(3, 2, wspace=0.01, hspace=0.01)
+pltgrid = gridspec.GridSpec(nplot, npart)
+axisdic = dict()
+
+for i in range(nplot):
+  for j in range(npart):
+    axis = plt.subplot(pltgrid[i,j])
+    axis.set_title(title[i][j])
+    axis.set_xlim(xmin[i],xmax[i])
+    axis.set_ylim(ymin[i][j],ymax[i][j])
+    axis.plot(x[i], datatmp[i][j], color[j])
+    axisdic[(i,j)] = axis
+
+
+
+
+
+#axis.set_xlabel(r'$M/M_H$')
+#axis.set_ylabel(r'$\frac{Nz}{U}$')
+#axis.set_xlim(xmin,xmax)
+#axM.plot(x, input[0], '-', label=legend_labels[i])
+#axM.legend(shadow=True, loc=2)
+
+
+
+outfilename = 'FFT.png'
+pltfig.savefig(outfilename)
+
+plt.show(True)

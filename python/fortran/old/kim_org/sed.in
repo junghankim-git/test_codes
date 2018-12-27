@@ -1,0 +1,28 @@
+s% => %=>%g
+s%/ /%//%g
+s% // %//%g
+s%len = %len=%g
+s%kind = %%g
+s%kind=%%g
+s%end do%enddo%g
+s%end if%endif%g
+s%loadatmosmodelrc%read_atm_conf%g
+s% if(% if (%g
+s% \.ne\. %\.ne\.%g
+s% \.eq\. %\.eq\.%g
+s% \.gt\. %\.gt\.%g
+s% \.ge\. %\.ge\.%g
+s% \.lt\. %\.lt\.%g
+s% \.le\. %\.le\.%g
+s% != %!=%g
+s% == %==%g
+s% > %>%g
+s% >= %>%g
+s% < %<%g
+s% <= %<=%g
+s% \.and\. %\.and\.%g
+s% \.or\. %\.or\.%g
+s%/ =%/=%g
+s% /= %/=%g
+s%\, %\,%g
+s%un = %un=%g

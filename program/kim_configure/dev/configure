@@ -1,0 +1,597 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import os
+import sys
+from optparse import OptionParser
+from collections import OrderedDict
+################################################################################
+#
+#  abstract : manager the resources of kim
+#
+#  history log:
+#    2015-03-25   junghan kim     initial setup
+#                                 option: compiler (gnu, pgi, intel)
+#                                 option: system   (gaon2, gaon1)
+#                                 option: dynamics (KIM-SH, KIM-SW)
+#    2015-06-16   junghan kim     KIM-SW + GRIMS
+#    2015-08-04   junghan kim     option: tachyon2, netcdf, pnetcdf
+#    2015-09-16   junghan kim     option: np, plev
+#    2017-07-28   junghan kim     code clean-up & refactoring
+#
+################################################################################
+
+
+class kimbase_mk:
+
+    def __init__(self, compiler='gnu', mpi='mvapich2', system='gaon2', dynamics='KIM-SW', \
+                 use_omp=False, use_pnc=False, use_single=False):
+        # options
+        self.compiler   = compiler
+        self.mpi        = mpi
+        self.system     = system
+        if system=='haenam' or system=='haeon' or system=='haedam':
+            system = 'haeon'
+        elif system=='nuri' or system=='miri' or system=='uri':
+            system = 'nuri'
+        self.dynamics   = 'KIM-SW'
+        self.use_omp    = use_omp
+        self.use_pnc    = use_pnc
+        self.use_single = use_single
+        # variables
+        self.comps = OrderedDict()
+        self.comps['HEAD'] = 'Header'
+        self.comps['COMP'] = 'Compiler and Parallel Libraries'
+        self.comps['ILIB'] = 'Internal Libraries'
+        self.comps['ELIB'] = 'External Libraries'
+        self.comps['LINK'] = 'Linking'
+        self.comps['PHYS'] = 'Physics'
+        self.comps['UTIL'] = 'Utilities'
+        self.comps['MBLD'] = 'Build target'
+        self.ncomps = len(self.comps)
+
+        self.dicts = OrderedDict()
+        for key in self.comps.keys():
+           self.dicts[key] = OrderedDict()
+        # parsing options
+        self.parse_var  = ['COMPILER','FC','MPIF90','FCFLAGS','FREAL8','NETCDF_DIR','NETCDF_LIB', \
+                           'NETCDF_INC','PNETCDF_DIR','PNETCDF_LIB','PNETCDF_INC']
+        self.compflags  = [None,None,None,None,None]
+        self.netcdf     = [None,None,None]
+        self.pnetcdf    = [None,None,None]
+
+        # system library paths
+        # - netcdf
+        self.nc_dicts = {'gaon2':{},'gaon1':{},'haeon':{},'nuri':{},'tachyon2':{},'any':{}}
+        for sys in self.nc_dicts.keys():
+            self.nc_dicts[sys] = {'gnu':None,'intel':None,'pgi':None}
+        self.nc_dicts['gaon2']['gnu']      = '/app/compilers/gcc/4.7.1/applib1/NETCDF4/4.1.3'
+        self.nc_dicts['gaon2']['intel']    = '/app/compilers/intel/2013.0.028/applib1/NETCDF4/4.1.3'
+        self.nc_dicts['gaon2']['pgi']      = '/app/compilers/pgi/linux86-64/12.10/applib1/NETCDF4/4.1.3'
+        self.nc_dicts['gaon1']['gnu']      = '/opt/kiaps/apps/netcdf/4.1.3/gcc/4.5.3'
+        self.nc_dicts['gaon1']['intel']    = '/opt/kiaps/apps/netcdf/4.1.3/intel/12.1.2.1'
+        self.nc_dicts['gaon1']['pgi']      = '/opt/kiaps/apps/netcdf/4.1.3/pgi/11.10'
+        self.nc_dicts['haeon']['gnu']      = '/opt/kma/netcdf/4.1.3.0/netcdf-gnu'
+        self.nc_dicts['haeon']['pgi']      = '/opt/kma/netcdf/4.1.3.0/netcdf-pgi'
+        self.nc_dicts['nuri']['gnu']       = '/opt/cray/netcdf/4.3.2'
+        self.nc_dicts['nuri']['intel']     = '/opt/cray/netcdf/4.3.2'
+        self.nc_dicts['nuri']['pgi']       = '/opt/cray/netcdf/4.3.2'
+        self.nc_dicts['tachyon2']['gnu']   = '/applic/compilers/gcc/4.4.6/applib1/NETCDF4'
+        self.nc_dicts['tachyon2']['intel'] = '/applic/compilers/intel/2013/applib1/NETCDF4/4.1.3'
+        self.nc_dicts['tachyon2']['pgi']   = '/applic/compilers/pgi/linux86-64/9.0-4/applib1/NETCDF4'
+        self.nc_dicts['any']['gnu']        = ''
+        self.nc_dicts['any']['intel']      = ''
+        self.nc_dicts['any']['pgi']        = ''
+        # - pnetcdf
+        self.pnc_dicts = {'gaon2':{},'gaon1':{},'haeon':{},'nuri':{},'tachyon2':{},'any':{}}
+        for sys in self.pnc_dicts.keys():
+            self.pnc_dicts[sys] = {'gnu':{},'intel':{},'pgi':{}}
+            for comp in self.pnc_dicts[sys].keys():
+                self.pnc_dicts[sys][comp] = {'mvapich1':None,'mvapich2':None,'openmpi':None,'impi':None}
+        self.pnc_dicts['gaon2']['gnu']['mvapich2']   = '/app/compilers/gcc/4.7.1/mpi/mvapich2/1.8.1/applib2/PNETCDF/1.6.1'
+        self.pnc_dicts['gaon2']['intel']['impi']     = '/app/compilers/intel/2013.0.028/mpi/impi/4.1.1.036/applib2/PNETCDF/1.6.1'
+        self.pnc_dicts['gaon2']['intel']['mvapich2'] = '/app/compilers/intel/2013.0.028/mpi/mvapich2/1.8.1/applib2/PNETCDF/1.6.1'
+        self.pnc_dicts['gaon2']['pgi']['mvapich2']   = '/app/compilers/pgi/linux86-64/12.10/mpi/mvapich2/1.8.1/applib2/PNETCDF/1.6.1'
+        self.pnc_dicts['gaon1']['gnu']['mvapich2']   = '/opt/kiaps/apps/pnetcdf/1.3.0/gcc/4.5.3'
+        self.pnc_dicts['gaon1']['intel']['mvapich2'] = '/opt/kiaps/apps/pnetcdf/1.4.1/intel/12.1'
+        self.pnc_dicts['gaon1']['pgi']['mvapich2']   = '/opt/kiaps/apps/pnetcdf/1.3.0/pgi/11.10'
+        self.pnc_dicts['haeon']['gnu']['mvapich2']   = '/opt/kma/parallel-netcdf/1.3.1/gemini/mpt-5.2.3/parallel-netcdf-gnu'
+        self.pnc_dicts['haeon']['pgi']['mvapich2']   = '/opt/kma/parallel-netcdf/1.3.1/gemini/mpt-5.2.3/parallel-netcdf-pgi'
+        self.pnc_dicts['nuri']['gnu']['mvapich2']    = '/opt/cray/parallel-netcdf/1.6.0'
+        self.pnc_dicts['nuri']['intel']['mvapich2']  = '/opt/cray/parallel-netcdf/1.6.0'
+        self.pnc_dicts['nuri']['pgi']['mvapich2']    = '/opt/cray/parallel-netcdf/1.6.0'
+        self.pnc_dicts['any']['gnu']['mvapich2']     = ''
+        self.pnc_dicts['any']['intel']['mvapich2']   = ''
+        self.pnc_dicts['any']['pgi']['mvapich2']     = ''
+
+
+    def generate(self):
+
+        self.dicts['HEAD']['BLDDIR']         = '$(KIMDIR)/build'
+        self.dicts['COMP']['COMPILER']       = 'gnu'
+        self.dicts['COMP']['FC']             = 'mpif90'
+        self.dicts['COMP']['MPIF90']         = 'mpif90'
+        self.dicts['COMP']['OMP']            = '-fopenmp'
+        self.dicts['COMP']['FPPFLAGS']       = '-cpp'
+        self.dicts['COMP']['FREAL8']         = '-fdefault-real-8'
+        self.dicts['COMP']['BIG_ENDIAN']     = ''
+        self.dicts['COMP']['NO_2UNDERSCORE'] = ''
+        self.dicts['COMP']['FCFLAGS']        = '-O2 -ffree-line-length-none'
+        self.dicts['COMP']['FCFLAGS_PHYS']   = '-O2 -ffree-line-length-none'
+        self.dicts['COMP']['CC']             = 'mpicc'
+        self.dicts['COMP']['MPICC']          = 'mpicc'
+        self.dicts['COMP']['CPPFLAGS']       = ''
+        self.dicts['COMP']['CFLAGS']         = '-O2'
+        self.dicts['ILIB']['EXE']            = 'KIM'
+        self.dicts['ILIB']['LD']             = '$(FC) $(FCFLAGS) $(OMP)'
+        self.dicts['ILIB']['INTACV']         = '-L$(BLDDIR)/lib -lcpl -lwav -locn -latm -lshared -lcoupler -ltime -lgptl -lmct -lmpeu -lkio'
+        self.dicts['ILIB']['INCLUDE']        = '-I./ -I$(BLDDIR)/inc'
+        self.dicts['ELIB']['BLAS_LIB']       = ''
+        self.dicts['ELIB']['LAPACK_LIB']     = ''
+        self.dicts['ELIB']['IO_ARCH']        = 'netcdf'
+        self.dicts['ELIB']['NETCDF_DIR']     = '/app/compilers/gcc/4.7.1/applib1/NETCDF4/4.1.3'
+        self.dicts['ELIB']['NETCDF_LIB']     = '-L$(NETCDF_DIR)/lib -lnetcdff -lnetcdf'
+        self.dicts['ELIB']['NETCDF_INC']     = '-I$(NETCDF_DIR)/include'
+        self.dicts['ELIB']['PNETCDF_DIR']    = ''
+        self.dicts['ELIB']['PNETCDF_LIB']    = ''
+        self.dicts['ELIB']['PNETCDF_INC']    = ''
+        self.dicts['ELIB']['EXTACV']         = '$(NETCDF_LIB) $(LAPACK_LIB) $(BLAS_LIB)'
+        self.dicts['ELIB']['EXTINC']         = '$(NETCDF_INC)'
+        self.dicts['LINK']['LINK']           = '$(LD) -o $(EXE) kim_main.o $(INTACV) $(EXTACV)'
+        self.dicts['PHYS']['R8FLAG']         = '$(FREAL8)'
+        self.dicts['PHYS']['PHYSFLAGS']      = '$(FREAL8) -ffree-form'
+        self.dicts['PHYS']['MICFLAGS']       = ''
+        self.dicts['PHYS']['W3FLAGS']        = '-ffree-form -fconvert       =big-endian -fno-range-check'
+        self.dicts['PHYS']['OMPFLAG']        = ''
+        self.dicts['UTIL']['AR']             = 'ar'
+        self.dicts['UTIL']['ARFLAGS']        = 'cr'
+        self.dicts['UTIL']['CP']             = '/bin/cp -f'
+        self.dicts['UTIL']['RM']             = '/bin/rm'
+        self.dicts['UTIL']['MV']             = '/bin/mv'
+        self.dicts['UTIL']['RMDIR']          = '/bin/rm -r'
+        self.dicts['UTIL']['MKDIR']          = '/bin/mkdir -p'
+        self.dicts['UTIL']['SED']            = '/bin/sed'
+        self.dicts['UTIL']['TAR']            = '/bin/tar'
+        self.dicts['UTIL']['GZIP']           = 'gzip -v'
+        self.dicts['MBLD']['build: make_build_dir'] ='\n\t@echo\n'
+        self.dicts['MBLD']['make_build_dir:']       ='\n\t-$(MKDIR) $(BLDDIR)/bin\n\t-$(MKDIR) $(BLDDIR)/lib\n\t-$(MKDIR) $(BLDDIR)/inc\n\t-$(MKDIR) $(BLDDIR)/etc\n\t-$(CP) $(KIMDIR)/config/KIM.h $(BLDDIR)/inc'
+
+        dynamics   = self.dynamics
+        compiler   = self.compiler
+        mpi        = self.mpi
+        system     = self.system
+        use_omp    = self.use_omp
+        use_pnc    = self.use_pnc
+        use_single = self.use_single
+
+        # dynamics dependency
+        '''
+        if dynamics == 'KIM-SH':
+            self.dicts['HEAD']['DYN_ARCH'] = 'SH'
+        elif dynamics == 'KIM-SW':
+            self.dicts['HEAD']['DYN_ARCH'] = 'SW'
+        else:
+            print('not support dynamics({}) '.format(dynamics))
+            quit()
+        '''
+
+        # mpi library
+        if mpi=='impi':
+            if compiler != 'intel':
+                print('warning: compiler change to intel.')
+                compiler = 'intel'
+            self.dicts['COMP']['FC']     = 'mpiifort'
+            self.dicts['COMP']['MPIF90'] = 'mpiifort'
+            self.dicts['COMP']['CC']     = 'mpiicc'
+            self.dicts['COMP']['MPICC']  = 'mpiicc'
+
+        # compiler dependency
+        if compiler == 'gnu':
+            self.dicts['COMP']['COMPILER'] = 'gnu'
+            if use_omp:
+                self.dicts['COMP']['OMP'] = '-fopenmp'
+            else:
+                self.dicts['COMP']['OMP'] = ''
+            if use_single:
+                self.dicts['COMP']['FREAL8'] = ''
+            else:
+                self.dicts['COMP']['FREAL8'] = '-fdefault-real-8'
+            self.dicts['COMP']['FPPFLAGS']       = '-cpp'
+            self.dicts['COMP']['BIG_ENDIAN']     = '-fconvert=big-endian'
+            self.dicts['COMP']['NO_2UNDERSCORE'] = '-fno-second-underscore'
+            self.dicts['COMP']['FCFLAGS']        = '-O2 -ffree-line-length-none'
+            self.dicts['COMP']['FCFLAGS_PHYS']   = '-O2 -ffree-line-length-none'
+            self.dicts['COMP']['CFLAGS']         = '-O2'
+            self.dicts['PHYS']['PHYSFLAGS']      = '$(FREAL8) -ffree-form'
+            self.dicts['PHYS']['W3FLAGS']        = '-ffree-form -fno-range-check'
+
+        elif compiler == 'intel':
+            self.dicts['COMP']['COMPILER'] = 'intel'
+            if use_omp:
+                self.dicts['COMP']['OMP'] = '-openmp'
+            else:
+                self.dicts['COMP']['OMP'] = ''
+            if use_single:
+                self.dicts['COMP']['FREAL8'] = ''
+            else:
+                self.dicts['COMP']['FREAL8'] = '-r8'
+            self.dicts['COMP']['FPPFLAGS']       = '-cpp'
+            self.dicts['COMP']['BIG_ENDIAN']     = '-convert big_endian'
+            self.dicts['COMP']['NO_2UNDERSCORE'] = '-assume no2underscores'
+            self.dicts['COMP']['FCFLAGS']        = '-O2 -free -no-wrap-margin -fp-model precise'
+            self.dicts['COMP']['FCFLAGS_PHYS']   = '-O1 -free -no-wrap-margin'
+            self.dicts['COMP']['CFLAGS']         = '-O2'
+            self.dicts['PHYS']['PHYSFLAGS']      = '$(FREAL8) -free'
+            self.dicts['PHYS']['W3FLAGS']        = '-free -assume byterecl -vec-report0'
+
+        elif compiler == 'pgi':
+            self.dicts['COMP']['COMPILER'] = 'pgi'
+            if use_omp:
+                self.dicts['COMP']['OMP'] = '-mp'
+            else:
+                self.dicts['COMP']['OMP'] = ''
+            if use_single:
+                self.dicts['COMP']['FREAL8'] = ''
+            else:
+                self.dicts['COMP']['FREAL8'] = '-r8'
+            self.dicts['COMP']['FPPFLAGS']       = '-Mcpp'
+            self.dicts['COMP']['BIG_ENDIAN']     = '-byteswapio'
+            self.dicts['COMP']['NO_2UNDERSCORE'] = ''
+            self.dicts['COMP']['FCFLAGS']        = '-fast -Mfree -Kieee'
+            self.dicts['COMP']['FCFLAGS_PHYS']   = '-fast -Mfree -Kieee'
+            self.dicts['COMP']['CFLAGS']         = '-fast -Kieee'
+            self.dicts['PHYS']['PHYSFLAGS']      = '$(FREAL8) -Mfree'
+            self.dicts['PHYS']['W3FLAGS']        = '-Mfree'
+            self.dicts['ILIB']['LD']             = '$(FC) $(FCFLAGS) $(OMP) -Wl,-z,muldefs'
+
+        else:
+            print('not support compiler ({}) '.format(compiler))
+            quit()
+
+        if system=='haeon' or system=='nuri':
+            self.dicts['COMP']['FC']     = 'ftn'
+            self.dicts['COMP']['MPIF90'] = 'ftn'
+            self.dicts['COMP']['CC']     = 'cc'
+            self.dicts['COMP']['MPICC']  = 'cc'
+
+
+        # system dependency (for netcdf and pnetcdf)
+        if use_pnc:
+            self.dicts['ELIB']['IO_ARCH'] = 'pnetcdf'
+            self.dicts['ELIB']['EXTACV']  = self.dicts['ELIB']['EXTACV']+' $(PNETCDF_LIB)'
+        else:
+            self.dicts['ELIB']['IO_ARCH'] = 'netcdf'
+            self.dicts['ELIB']['PNETCDF_DIR'] = ''
+
+        if self.nc_dicts[system][compiler]==None:
+            print('check netcdf library for {}, {}'.format(system,compiler))
+            quit()
+        self.dicts['ELIB']['NETCDF_DIR']  = self.nc_dicts[system][compiler]
+
+        if use_pnc:
+            if self.pnc_dicts[system][compiler][mpi]==None:
+                print('check pnetcdf library for {}, {}, {}'.format(system,compiler,mpi))
+                quit()
+            self.dicts['ELIB']['PNETCDF_DIR'] = self.pnc_dicts[system][compiler][mpi]
+  
+        self.dicts['ELIB']['NETCDF_LIB']  = '-L$(NETCDF_DIR)/lib -lnetcdff -lnetcdf'
+        self.dicts['ELIB']['NETCDF_INC']  = '-I$(NETCDF_DIR)/include'
+        self.dicts['ELIB']['PNETCDF_LIB'] = '-L$(PNETCDF_DIR)/lib -lpnetcdf'
+        self.dicts['ELIB']['PNETCDF_INC'] = '-I$(PNETCDF_DIR)/include'
+
+
+    def parsing_args(self, args_in):
+        nargs = len(args_in)
+        for i in range(nargs):
+            var, val = args_in[i].split("=")
+            if self.parse_var.count(var) == 1:
+                idx = self.parse_var.index(var)
+                if idx < 5:
+                    self.compflags[idx] = val
+                elif idx >= 5 and idx < 8:
+                    self.netcdf[idx-5] = val
+                elif idx >= 8 and idx < 11:
+                    self.pnetcdf[idx-8] = val
+            else:
+                print('argument ({}) is not found...'.format(var))
+        self.set_compiler_flags(self.compflags[0],self.compflags[1],self.compflags[2],self.compflags[3],self.compflags[4])
+        self.set_netcdf(self.netcdf[0],self.netcdf[1],self.netcdf[2])
+        self.set_pnetcdf(self.pnetcdf[0],self.pnetcdf[1],self.pnetcdf[2])
+ 
+ 
+    def set_compiler(self, compiler):
+        if compiler.lower() == 'gnu':
+            self.dicts['COMP']['COMPILER'] = 'gnu'
+        elif compiler.lower() == 'pgi':
+            self.dicts['COMP']['COMPILER'] = 'pgi'
+        elif compiler.lower() == 'intel':
+            self.dicts['COMP']['COMPILER'] = 'intel'
+        elif compiler == None:
+            pass
+        else:
+            print('not support compiler({})...'.format(compiler))
+            quit()
+ 
+ 
+    def set_compiler_flags(self, compiler=None, fc=None, mpifc=None, flags=None, real8=None):
+        if compiler != None:
+            self.set_compiler(compiler)
+        if fc != None:
+            self.dicts['COMP']['FC']      = fc
+        if mpifc != None:
+            self.dicts['COMP']['MPIF90']  = mpifc
+        if flags != None:
+            self.dicts['COMP']['FCFLAGS'] = flags
+        if real8 != None:
+            self.dicts['COMP']['FREAL8']  = real8
+ 
+ 
+    def set_netcdf(self, netcdf_path, netcdf_lib_path=None, netcdf_inc_path=None):
+        if netcdf_path     != None: self.dicts['ELIB']['NETCDF_DIR'] = netcdf_path
+        if netcdf_lib_path != None: self.dicts['ELIB']['NETCDF_LIB'] = '-L'+netcdf_lib_path+' -lnetcdff -lnetcdf'
+        if netcdf_inc_path != None: self.dicts['ELIB']['NETCDF_INC'] = '-I'+netcdf_inc_path
+ 
+ 
+    def set_pnetcdf(self, pnetcdf_path, pnetcdf_lib_path=None, pnetcdf_inc_path=None):
+        if pnetcdf_path     != None: self.dicts['ELIB']['PNETCDF_DIR'] = pnetcdf_path
+        if pnetcdf_lib_path != None: self.dicts['ELIB']['PNETCDF_LIB'] = '-L'+pnetcdf_lib_path+' -lnetcdff -lnetcdf'
+        if pnetcdf_inc_path != None: self.dicts['ELIB']['PNETCDF_INC'] = '-I'+pnetcdf_inc_path
+ 
+ 
+    def print_kimbase(self):
+        ncomps = self.ncomps
+
+        i = 0
+        for cname,dict in self.dicts.items():
+            if i == 0:
+                print('# KIAPS Global Model (KIM) base makefile')
+                self.print_line(True)
+            self.print_header(self.comps[cname])
+            for key,value in dict.items():
+                if i < ncomps-2:
+                    print('{-15}= {}'.format(key,value))
+                else:
+                    print('{} {}'.format(key,value))
+            self.print_tail()
+            i = i+1
+ 
+ 
+    def write_kimbase(self, filedir='.'):
+        ncomps = self.ncomps
+
+        if not os.path.isdir(filedir):
+            print('check filedir({})...'.format(filedir))
+            quit()
+
+        if filedir[-1] == '/': filedir = filedir[0:-1]
+
+        filename = filedir+'/KIMBase.mk'
+        os.system('rm -rf '+filename)
+        outfile = open(filename,'w')
+
+        self.print_line_file(outfile,False)
+        outfile.write('# KIAPS Global Model (KIM) base makefile\n')
+        self.print_tail_file(outfile)
+        i = 0
+        for cname,dict in self.dicts.items():
+            self.print_header_file(outfile,self.comps[cname])
+            for key,value in dict.items():
+                if cname=='MBLD':
+                    outfile.write('%-s %s\n'%(key,value))
+                else:
+                    outfile.write('%-15s= %s\n'%(key,value))
+            self.print_tail_file(outfile)
+            i = i+1
+
+        outfile.close()
+        print('## generated file ({})'.format(filename))
+ 
+ 
+    def print_header(self, name):
+        self.print_line()
+        print('# ++ '+name)
+        self.print_line(True)
+ 
+ 
+    def print_tail(self):
+        self.print_line()
+        print('\n\n\n')
+ 
+    def print_line(self, is_center=False):
+        if is_center:
+            print('#'+80*'-'+'#')
+        else:
+            print('#'+80*'='+'#')
+ 
+ 
+    def print_header_file(self, file, name):
+        self.print_line_file(file)
+        file.write('# ++ '+name+'\n')
+        self.print_line_file(file,True)
+ 
+ 
+    def print_tail_file(self, file):
+        self.print_line_file(file)
+        file.write('\n\n\n\n')
+ 
+    def print_line_file(self,file,is_center=False):
+        if is_center:
+            file.write('#'+80*'-'+'#\n')
+        else:
+            file.write('#'+80*'='+'#\n')
+
+
+
+
+
+
+class kim_h:
+
+    def __init__(self, dynamics='KIM-SW', np=4, nlevs=50, use_pnc=False, use_hyb_v=True,  \
+                 use_single=False, use_debug=False):
+        # options
+        self.dynamics   = dynamics
+        self.np         = np
+        self.nlevs      = nlevs
+        self.use_pnc    = use_pnc
+        self.use_hyb_v  = use_hyb_v
+        self.use_single = use_single
+        self.use_debug  = use_debug
+        # values
+        self.kimh_dicts      = OrderedDict()
+        self.kimh_dicts      = {'Shared':OrderedDict(),'KIM-SW':OrderedDict()}
+        self.user_opt   = {'Shared':True,'KIM-SW':False}
+ 
+ 
+    def generate(self):
+ 
+        # Shared
+        self.kimh_dicts['Shared']['NP '+str(self.np)]       = True
+        self.kimh_dicts['Shared']['PLEV '+str(self.nlevs)]  = True
+        self.kimh_dicts['Shared']['_MPI']                   = True
+        if self.use_pnc:
+            self.kimh_dicts['Shared']['USE_PNETCDF']        = True
+        else:
+            self.kimh_dicts['Shared']['USE_PNETCDF']        = False
+        if self.use_single:
+            self.kimh_dicts['Shared']['_SINGLE']            = True
+        else:
+            self.kimh_dicts['Shared']['_SINGLE']            = False
+        if self.use_debug:
+            self.kimh_dicts['Shared']['_DEBUG']             = True
+        else:
+            self.kimh_dicts['Shared']['_DEBUG']             = False
+        
+        # KIM-SW
+        if self.use_hyb_v:
+            self.kimh_dicts['KIM-SW']['vcoord_hybridsigma'] = True
+        else:
+            self.kimh_dicts['KIM-SW']['vcoord_sigma']       = True 
+
+ 
+ 
+    def write_kim_h(self, filedir='.'):
+
+        if not os.path.isdir(filedir):
+            print('check filedir({})...'.format(filedir))
+            quit()
+
+        if filedir[-1] == '/': filedir = filedir[0:-1]
+
+        filename = filedir+'/KIM.h'
+        os.system('rm -rf '+filename)
+        outfile = open(filename,'w')
+
+        string = '#define KIM_VERSION \"3.0.09\"\n\n'
+        outfile.write(string)
+
+        for comp_name,dicts in self.kimh_dicts.items():
+            self.print_header_file(outfile,self.user_opt[comp_name],comp_name)
+            for value,use in dicts.items():
+                if use:
+                    outfile.write('%s %s\n'%('#define',value))
+                else:
+                    outfile.write('%s %s\n'%('#undef ',value))
+            self.print_tail_file(outfile)
+
+        outfile.close()
+        print('## generated file ({})'.format(filename))
+ 
+ 
+    def print_header_file(self, file, user_opt, name):
+        if user_opt:
+            string = '! User\'s options\n'
+        else:
+            string = '! Developer\'s options\n'
+        file.write(string)
+        string = '!------- %8s -------\n'%(name)
+        file.write(string)
+ 
+ 
+    def print_tail_file(self, file):
+        string = '!----------------------\n'
+        file.write(string)
+        file.write('\n\n\n')
+ 
+ 
+    def print_line_file(self, file, is_center=False):
+        if is_center:
+            file.write('#'+80*'-'+'#\n')
+        else:
+            file.write('#'+80*'='+'#\n')
+
+
+
+
+
+
+################################################################################
+# Main Program
+################################################################################
+def main():
+
+    kimdir = os.getenv('KIMDIR')
+
+    opt = OptionParser()
+    ### action: 'store', 'store_const', 'append', 'count', 'callback'
+    opt.add_option('-c', '--compiler',action='store',      dest='compiler', default='gnu',        \
+                   help='compiler (gnu*, pgi, intel)',     type='string')
+    opt.add_option('-m', '--mpi',     action='store',      dest='mpi',      default='mvapich2',   \
+                   help='mpi library (mvapich1or2, impi)', type='string')
+    opt.add_option('-s', '--system',  action='store',      dest='system',   default='gaon2',      \
+                   help='system (gaon2*, gaon1, nuri, miri, uri, ..., any)',type='string')
+    opt.add_option('-q', '--np',      action='store',      dest='np',       default=4,            \
+                   help='number of quadrature points',     type='int')
+    opt.add_option('-v', '--nlevs',   action='store',      dest='nlevs',    default=50,           \
+                   help='number of vertical points',       type='int')
+    opt.add_option('-o', '--path',    action='store',      dest='outpath',  default=kimdir+'/config', \
+                   help='path of KIM.h & KIMBase.mk',      type='string')
+    opt.add_option('-t', '--openmp',  action='store_true', dest='openmp',   default=False,        \
+                   help='on/off* OpenMP')
+    opt.add_option('-p', '--pnetcdf', action='store_true', dest='pnetcdf',  default=False,        \
+                   help='on/off* PNetCDF')
+    opt.add_option('-g', '--sigma',   action='store_false',dest='use_hyb_v',default=True,         \
+                   help='on*/off Hybrid-sigma')
+    opt.add_option('-4', '--single',  action='store_true', dest='single',   default=False,        \
+                   help='single precision')
+    opt.add_option('-d', '--debug',   action='store_true', dest='debug',    default=False,        \
+                   help='debug flag')
+
+    (options, args) = opt.parse_args()
+
+    compiler = options.compiler.lower()
+    mpi      = options.mpi.lower()
+    system   = options.system.lower()
+    dynamics = 'KIM-SW'
+    path     = options.outpath
+
+    if compiler!='gnu' and compiler!='intel' and compiler!='pgi':
+        print('check compiler: {}'.format(compiler))
+        quit()
+
+    if mpi!='mvapich1' and mpi!='mvapich2' and mpi!='openmpi' and mpi!='impi':
+        print('check mpi: {}'.format(mpi))
+        quit()
+
+
+    kim = kimbase_mk(compiler=compiler,mpi=mpi,system=system,dynamics=dynamics, \
+                     use_omp=options.openmp,use_pnc=options.pnetcdf,            \
+                     use_single=options.single)
+    kim.generate()
+    kim.parsing_args(args)
+    #kim.print_kimbase()
+    kim.write_kimbase(path)
+
+    kimh = kim_h(dynamics=dynamics,np=options.np,nlevs=options.nlevs,           \
+                 use_pnc=options.pnetcdf,use_hyb_v=options.use_hyb_v,           \
+                 use_single=options.single,use_debug=options.debug)
+    kimh.generate()
+    kimh.write_kim_h(path)
+
+
+
+
+if __name__ == '__main__':
+    main()
+
+
+

@@ -1,0 +1,20 @@
+&inputs
+
+ remapfile = '/home/jhkim/Study/Library/Main/SCRIP/3.remap_matrix/CS_CS/ne030_rotated_to_ne030_unrotated.nc'
+ srcfile   = '/scratch/jhkim/TestBed/KIM/Output/2.3/ne30/gnu/10h/SW_G/101/UP-20110725220000-000011.nc'
+
+! remapfile = '/home/jhkim/Study/Library/Main/SCRIP/3.remap_matrix/CS_CS/ne030_unrotated_to_ne060_rotated.nc'
+! srcfile   = '/scratch/jhkim/TestBed/KIM/Output/2.2/ne30/gnu/10h/SW_G/101/UP-20110725220000-000011.nc'
+
+! remapfile = '/home/jhkim/Study/Library/Main/SCRIP/3.remap_matrix/CS_CS/ne030_rotated_to_ne120_rotated.nc'
+! srcfile   = '/scratch/jhkim/TestBed/KIM/Output/2.3/ne30/gnu/10h/SW_G/101/UP-20110725220000-000011.nc'
+
+! remapfile = '/home/jhkim/Study/Library/Main/SCRIP/3.remap_matrix/CS_WW3/ne030_rotated_to_WW3.nc'
+! srcfile   = '/scratch/jhkim/TestBed/KIM/Output/2.3/ne30/gnu/10h/SW_G/101/UP-20110725220000-000011.nc'
+
+
+ oufile    = './result.nc'
+ dimname   = 'ncol'
+ varname   = 'u10m'
+
+/

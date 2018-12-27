@@ -1,0 +1,6 @@
+
+FC      = g++
+MPIFC   = mpic++
+FCFLAGS = -O2 -fbounds-check -fstack-check
+
+LIBNAME = numeric

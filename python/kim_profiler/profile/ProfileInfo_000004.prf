@@ -1,0 +1,164 @@
+GPTL was built without threading
+HAVE_MPI was true
+  HAVE_COMM_F2C was true
+  ENABLE_PMPI was false
+HAVE_PAPI was false
+Underlying timing routine was gettimeofday.
+GPTLget_overhead: using hash entry 21=SetPhysCommon for getentry estimate
+Total overhead of 1 GPTL start or GPTLstop call=5.6e-08 seconds
+Components are as follows:
+Fortran layer:             1.0e-09 =   1.8% of total
+Get thread number:         2.0e-09 =   3.6% of total
+Generate hash index:       9.0e-09 =  16.1% of total
+Find hashtable entry:      9.0e-09 =  16.1% of total
+Underlying timing routine: 3.3e-08 =  58.9% of total
+Misc start/stop functions: 2.0e-09 =   3.6% of total
+
+NOTE: If GPTL is called from C not Fortran, the 'Fortran layer' overhead is zero
+NOTE: For calls to GPTLstart_handle()/GPTLstop_handle(), the 'Generate hash index' overhead is zero
+NOTE: For auto-instrumented calls, the cost of generating the hash index plus finding
+      the hashtable entry is 0.0e+00 not the 1.8e-08 portion taken by GPTLstart
+NOTE: Each hash collision roughly doubles the 'Find hashtable entry' cost of that timer
+
+If overhead stats are printed, they are the columns labeled self_OH and parent_OH
+self_OH is estimated as 2X the Fortran layer cost (start+stop) plust the cost of 
+a single call to the underlying timing routine.
+parent_OH is the overhead for the named timer which is subsumed into its parent.
+It is estimated as the cost of a single GPTLstart()/GPTLstop() pair.
+Print method was full_tree.
+
+If a '%_of' field is present, it is w.r.t. the first timer for thread 0.
+If a 'e6_per_sec' field is present, it is in millions of PAPI counts per sec.
+
+A '*' in column 1 below means the timer had multiple parents, though the
+values printed are for all calls.
+Further down the listing may be more detailed information about multiple
+parents. Look for 'Multiple parent info'
+
+Stats for thread 0:
+                                                         Called  Recurse Usr       sys       usr+sys   Wallclock max       min       %_of_Total self_OH  parent_OH 
+  Total                                                         1    -      86.440     2.830    89.270    90.179    90.179    90.179     100.00     0.000     0.000 
+    IniGrid                                                     1    -       0.160     0.160     0.320     0.521     0.521     0.521       0.58     0.000     0.000 
+    SetAtmosModel                                               1    -       0.120     0.000     0.120     0.238     0.238     0.238       0.26     0.000     0.000 
+      SetDynamicalCore                                          1    -       0.020     0.000     0.020     0.046     0.046     0.046       0.05     0.000     0.000 
+        SetCoreHOMME                                            1    -       0.020     0.000     0.020     0.039     0.039     0.039       0.04     0.000     0.000 
+      SetPhysicsPackage                                         1    -       0.080     0.000     0.080     0.121     0.121     0.121       0.13     0.000     0.000 
+        SetPhysCommon                                           1    -       0.010     0.000     0.010     0.025     0.025     0.025       0.03     0.000     0.000 
+        SetPhysT                                                1    -       0.070     0.000     0.070     0.095     0.095     0.095       0.11     0.000     0.000 
+      SetOutput                                                 1    -       0.010     0.000     0.010     0.057     0.057     0.057       0.06     0.000     0.000 
+    IniAtmosModel                                               1    -       3.300     0.720     4.020     4.199     4.199     4.199       4.66     0.000     0.000 
+      InitInput                                                 1    -       0.000     0.000     0.000     0.020     0.020     0.020       0.02     0.000     0.000 
+      InitRestart                                               1    -       0.000     0.000     0.000  2.39e-03  2.39e-03  2.39e-03       0.00     0.000     0.000 
+      IniDynamicalCore                                          1    -       0.240     0.190     0.430     0.463     0.463     0.463       0.51     0.000     0.000 
+        IniCoreHOMME                                            1    -       0.240     0.190     0.430     0.463     0.463     0.463       0.51     0.000     0.000 
+          prim_init1                                            1    -       0.230     0.190     0.420     0.419     0.419     0.419       0.46     0.000     0.000 
+            decompose                                           1    -       0.000     0.000     0.000  6.00e-06  6.00e-06  6.00e-06       0.00     0.000     0.000 
+          prim_init2                                            1    -       0.000     0.000     0.000     0.031     0.031     0.031       0.03     0.000     0.000 
+            bv_transfer                                         1    -       0.000     0.000     0.000  1.50e-05  1.50e-05  1.50e-05       0.00     0.000     0.000 
+              bvsigma                                           2    -       0.000     0.000     0.000  1.30e-05  1.30e-05  0.00e+00       0.00     0.000     0.000 
+            taylor_filter_create                                2    -       0.000     0.000     0.000  6.98e-04  6.96e-04  2.00e-06       0.00     0.000     0.000 
+      IniPhysicsPackage                                         1    -       1.070     0.460     1.530     1.603     1.603     1.603       1.78     0.000     0.000 
+        IniPhysCommon                                           1    -       0.920     0.040     0.960     1.022     1.022     1.022       1.13     0.000     0.000 
+        IniPhysT                                                1    -       0.140     0.420     0.560     0.580     0.580     0.580       0.64     0.000     0.000 
+      IniExperiment                                             1    -       1.080     0.040     1.120     1.118     1.118     1.118       1.24     0.000     0.000 
+      InitHOMMEOutput                                           1    -       0.010     0.000     0.010  5.29e-03  5.29e-03  5.29e-03       0.01     0.000     0.000 
+      InitDyCoreOutput                                          1    -       0.000     0.000     0.000  0.00e+00  0.00e+00  0.00e+00       0.00     0.000     0.000 
+      InitPhysicsOutput                                         1    -       0.000     0.000     0.000  0.00e+00  0.00e+00  0.00e+00       0.00     0.000     0.000 
+*     WriteDyCoreOutput                                        16    -       0.000     0.000     0.000     0.013     0.012  7.00e-06       0.01     0.000     0.000 
+*     WritePhysicsOutput                                        6    -       0.090     0.010     0.100     0.110     0.044     0.012       0.12     0.000     0.000 
+*     WriteHOMMEOutput                                         16    -       1.400     0.030     1.430     1.443     0.822  0.00e+00       1.60     0.000     0.000 
+    RunAtmosModel                                               1    -      82.850     1.870    84.720    85.095    85.095    85.095      94.36     0.000     0.000 
+*     WriteDyCoreOutput                                        16    -       0.000     0.000     0.000     0.013     0.012  7.00e-06       0.01     0.000     0.000 
+*     WriteHOMMEOutput                                         16    -       1.400     0.030     1.430     1.443     0.822  0.00e+00       1.60     0.000     0.000 
+      RunDynamicalCore                                         15    -      60.300     0.610    60.910    60.996     8.068     3.719      67.64     0.000     0.000 
+        RunCoreHOMME                                           15    -      60.300     0.610    60.910    60.995     8.068     3.719      67.64     0.000     0.000 
+          prim_run                                             15    -      60.200     0.610    60.810    60.891     8.061     3.715      67.52     0.000     0.000 
+            sync_prim_advance_exp                              60    -       4.640     0.000     4.640     4.643     4.335  3.00e-06       5.15     0.000     0.000 
+            prim_advance_exp                                   60    -      26.630     0.420    27.050    27.020     0.544     0.424      29.96     0.000     0.000 
+              sync_compute_and_apply_rhs                       75    -       0.030     0.000     0.030     0.041  4.00e-03  1.00e-06       0.05     0.000     0.000 
+              compute_and_apply_rhs                            75    -       7.400     0.040     7.440     7.469     0.103     0.098       8.28     0.000     0.000 
+                edge_pack(compute_and_apply_rhs)           151875    -       0.520     0.020     0.540     0.406  1.70e-05  0.00e+00       0.45     0.005     0.012 
+                bndry_exchange(compute_and_apply_rhs)          75    -       0.180     0.000     0.180     0.192  2.90e-03  1.90e-03       0.21     0.000     0.000 
+                edge_unpack(compute_and_apply_rhs)         151875    -       1.160     0.000     1.160     1.087  5.80e-05  0.00e+00       1.21     0.005     0.012 
+              sync_advance_hypervis                            60    -       0.150     0.000     0.150     0.178  4.22e-03  2.76e-03       0.20     0.000     0.000 
+              advance_hypervis                                 60    -      19.050     0.370    19.420    19.319     0.332     0.321      21.42     0.000     0.000 
+                edge_pack(biharmonic_wk)                   243000    -       0.700     0.050     0.750     0.649  1.80e-05  0.00e+00       0.72     0.008     0.018 
+                bndry_exchange(biharmonic_wk)                 120    -       0.510     0.000     0.510     0.494  6.67e-03  2.25e-03       0.55     0.000     0.000 
+                edge_unpack(biharmonic_wk)                 243000    -       1.650     0.030     1.680     1.662  3.30e-05  0.00e+00       1.84     0.008     0.018 
+                edge_pack(advance_hypervis)                243000    -       0.580     0.050     0.630     0.669  4.70e-05  0.00e+00       0.74     0.008     0.018 
+                bndry_exchange(advance_hypervis)              120    -       0.610     0.000     0.610     0.574  5.70e-03  4.04e-03       0.64     0.000     0.000 
+                edge_unpack(advance_hypervis)              162000    -       1.720     0.010     1.730     1.654  6.50e-05  6.00e-06       1.83     0.006     0.012 
+            sync_prim_advec_tracers_remap_k2                   15    -       0.020     0.000     0.020     0.038  2.91e-03  9.00e-06       0.04     0.000     0.000 
+            prim_advec_tracers_remap_rk2                       15    -      18.440     0.190    18.630    18.690     1.262     1.215      20.73     0.000     0.000 
+              euler_step                                       45    -       9.840     0.030     9.870     9.935     0.233     0.214      11.02     0.000     0.000 
+                edge_pack(euler_step)                       60750    -       0.670     0.010     0.680     0.690  6.00e-05  0.00e+00       0.77     0.002     0.005 
+                bndry_exchange(euler_step)                     45    -       0.460     0.000     0.460     0.442     0.013  5.92e-03       0.49     0.000     0.000 
+                edge_unpack(euler_step)                     60750    -       2.650     0.000     2.650     2.706  1.31e-04  5.00e-06       3.00     0.002     0.005 
+              sync_advance_hypervis_scalar                     15    -       0.080     0.000     0.080     0.088  6.39e-03  4.84e-03       0.10     0.000     0.000 
+              advance_hypervis_scalar                          15    -       7.880     0.160     8.040     8.057     0.543     0.529       8.93     0.000     0.000 
+                edge_pack(biharmonic_wk_scalar)             10125    -       0.210     0.000     0.210     0.220  5.70e-05  1.60e-05       0.24     0.000     0.001 
+                bndry_exchange(biharmonic_wk_scalar)           15    -       0.130     0.000     0.130     0.096  7.27e-03  5.88e-03       0.11     0.000     0.000 
+                edge_unpack(biharmonic_wk_scalar)           10125    -       0.780     0.000     0.780     0.797  1.05e-04  6.40e-05       0.88     0.000     0.001 
+                edge_pack(advance_hypervis_scalar)          10125    -       0.210     0.000     0.210     0.193  4.50e-05  1.60e-05       0.21     0.000     0.001 
+                bndry_exchange(advance_hypervis_scalar)        15    -       0.160     0.000     0.160     0.170     0.012  9.97e-03       0.19     0.000     0.000 
+                edge_unpack(advance_hypervis_scalar)        10125    -       0.820     0.000     0.820     0.832  1.32e-04  6.70e-05       0.92     0.000     0.001 
+            vertical_remap                                     15    -       9.910     0.000     9.910     9.915     0.666     0.654      10.99     0.000     0.000 
+              remap1                                        10125    -       9.870     0.000     9.870     9.877  1.07e-03  9.46e-04      10.95     0.000     0.001 
+      RunPhysicsPackage                                        15    -      21.940     1.250    23.190    23.478    14.739  0.00e+00      26.04     0.000     0.000 
+*       WritePhysicsOutput                                      6    -       0.090     0.010     0.100     0.110     0.044     0.012       0.12     0.000     0.000 
+        RunPhysAncillary                                        1    -       0.010     0.000     0.010     0.010     0.010     0.010       0.01     0.000     0.000 
+        RunSurface                                              5    -       0.000     0.000     0.000  5.45e-04  1.15e-04  1.04e-04       0.00     0.000     0.000 
+        RunPhysT                                                5    -      21.850     1.250    23.100    23.401    14.727     2.165      25.95     0.000     0.000 
+          RunRad                                                5    -      12.720     0.220    12.940    13.221    12.798     0.105      14.66     0.000     0.000 
+          RunSfc                                                5    -       0.080     0.030     0.110     0.100     0.021     0.018       0.11     0.000     0.000 
+          RunLand                                               5    -       0.130     0.000     0.130     0.130     0.034     0.024       0.14     0.000     0.000 
+          RunPbl                                                5    -       0.890     0.210     1.100     1.109     0.231     0.191       1.23     0.000     0.000 
+          RunGWDOro                                             5    -       0.400     0.100     0.500     0.518     0.107     0.095       0.57     0.000     0.000 
+          RunConvDeep                                           5    -       1.250     0.200     1.450     1.447     0.295     0.281       1.60     0.000     0.000 
+          RunConvShal                                           5    -       0.770     0.140     0.910     0.910     0.188     0.170       1.01     0.000     0.000 
+          RunCldMacro                                           5    -       0.560     0.100     0.660     0.663     0.136     0.126       0.74     0.000     0.000 
+          RunCldMicro                                           5    -       0.140     0.050     0.190     0.174     0.036     0.032       0.19     0.000     0.000 
+          RunCldMacroAfMicro                                    5    -       0.000     0.000     0.000  2.20e-05  1.00e-05  1.00e-06       0.00     0.000     0.000 
+          RunGWDNonOro                                          5    -       3.100     0.200     3.300     3.311     0.667     0.654       3.67     0.000     0.000 
+            RunUSSP                                             5    -       3.100     0.200     3.300     3.311     0.667     0.654       3.67     0.000     0.000 
+      WriteRestart                                             15    -       0.000     0.000     0.000  6.00e-06  1.00e-06  0.00e+00       0.00     0.000     0.000 
+    FinAtmosModel                                               1    -       0.000     0.070     0.070     0.074     0.074     0.074       0.08     0.000     0.000 
+      FinDynamicalCore                                          1    -       0.000     0.000     0.000  3.00e-06  3.00e-06  3.00e-06       0.00     0.000     0.000 
+        FinCoreHOMME                                            1    -       0.000     0.000     0.000  0.00e+00  0.00e+00  0.00e+00       0.00     0.000     0.000 
+      FinPhysicsPackage                                         1    -       0.000     0.070     0.070     0.073     0.073     0.073       0.08     0.000     0.000 
+        FinPhysT                                                1    -       0.000     0.060     0.060     0.060     0.060     0.060       0.07     0.000     0.000 
+        FinPhysCommon                                           1    -       0.000     0.010     0.010     0.013     0.013     0.013       0.01     0.000     0.000 
+      FinKiapsHOMMEOutput                                       1    -       0.000     0.000     0.000  2.00e-06  2.00e-06  2.00e-06       0.00     0.000     0.000 
+      FinKiapsHOMMERestartIO                                    1    -       0.000     0.000     0.000  1.02e-03  1.02e-03  1.02e-03       0.00     0.000     0.000 
+      FinKiapsHOMMEIO                                           1    -       0.000     0.000     0.000  1.00e-06  1.00e-06  1.00e-06       0.00     0.000     0.000 
+
+Overhead sum =      0.15 wallclock seconds
+Total calls  = 1.368e+06
+
+Multiple parent info for thread 0:
+Columns are count and name for the listed child
+Rows are each parent, with their common child being the last entry, which is indented.
+Count next to each parent is the number of times it called the child.
+Count next to child is total number of times it was called by the listed parents.
+
+       1 IniAtmosModel                   
+      15 RunAtmosModel                   
+      16   WriteDyCoreOutput               
+
+       1 IniAtmosModel                   
+       5 RunPhysicsPackage               
+       6   WritePhysicsOutput              
+
+       1 IniAtmosModel                   
+      15 RunAtmosModel                   
+      16   WriteHOMMEOutput                
+
+
+Total GPTL memory usage = 37.816 KB
+Components:
+Hashmem                 = 17.096 KB
+Regionmem               = 18.2 KB (papimem portion = 0 KB)
+Parent/child arrays     = 1.496 KB
+Callstackmem            = 1.024 KB
+
+GPTLthreadid[0] = 0

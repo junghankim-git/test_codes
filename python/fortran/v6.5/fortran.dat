@@ -1,0 +1,231 @@
+@========================================
+@ * types
+@----------------------------------------
+@ -3 : just set line
+@ -2 : no type
+@ -1 : type out
+@  0 : canvas
+@  1 : type (program, module)
+@  2 : function, subroutine
+@  3 : use, implicit none, ...
+@  4 : declaration (integer, real, ...)
+@  5 : do, if, while, else
+@  6 : others
+@========================================
+
+@CAPITAL 0
+@BASE_HINTENT 3
+@BASE_VINTENT 0
+@VINTENT_MARK !
+
+@    oldtype  newtype   depend intent(h) intent(v)
+@DEF       0        0        0        0        0
+@DEF       0        1        0        0        0
+@DEF       0        2        0        0        1
+@DEF       0        3        0        0        0
+@DEF       0        4        0        0        0
+@DEF       0        5        0        0        0
+@DEF       0        6        0        0        0
+
+@DEF       1        0        0        0        0
+@DEF       1        1        0        0        0
+@DEF       1        2        0        0        0
+@DEF       1        3        0        0        0
+@DEF       1        4        0        0        1
+@DEF       1        5        0        0        1
+@DEF       1        6        0        0        1
+
+@DEF       2        0        0        0        1
+@DEF       2        1        0        0        1
+@DEF       2        2        0        0        0
+@DEF       2        3        1        0        0
+@DEF       2        4        1        0        1
+@DEF       2        5        1        0        1
+@DEF       2        6        1        0        1
+
+@DEF       3        0        0        0        0
+@DEF       3        1        0        0        1
+@DEF       3        2        0        0        1
+@DEF       3        3        1        0        0
+@DEF       3        4        1        0        1
+@DEF       3        5        1        0        1
+@DEF       3        6        1        0        1
+
+@DEF       4        0        0        0        1
+@DEF       4        1        0        0        1
+@DEF       4        2        0        0        0
+@DEF       4        3        0        0        0
+@DEF       4        4        1        0        0
+@DEF       4        5        0        0        1
+@DEF       4        6        0        0        1
+
+@DEF       5        0        0       -2        0
+@DEF       5        1        0       -2        0
+@DEF       5        2        0        2        0
+@DEF       5        3        0       -1        0
+@DEF       5        4        1        2        0
+@DEF       5        5        1        2        0
+@DEF       5        6        1        2        0
+
+@DEF       6        0        0        0        0
+@DEF       6        1        0        0        1
+@DEF       6        2        0        0        0
+@DEF       6        3        0        0        0
+@DEF       6        4        0        0        0
+@DEF       6        5        1        0        0
+@DEF       6        6        1        0        0
+
+
+@==============================================================
+@name            type  need_str  goto_type  end_type   rename
+@==============================================================
+
+
+@ Level 6: Normal
+CALL                6      none        -9         0      none
+GOTO                6      none        -9         0      none
+READ                6      none        -9         0      none
+WRITE               6      none        -9         0      none
+PRINT               6      none        -9         0      none
+FORALL              6      none        -9         0      none
+ALLOCATE            6      none        -9         0      none
+DEALLOCATE          6      none        -9         0      none
+NULLIFY             6      none        -9         0      none
+RETURN              6      none        -9         0      none
+WHILE               6      none        -9         0      none
+STOP                6      none        -9         0      none
+
+
+@ Level 5: Level command
+DO                  5      none        -9         0      none
+IF                  5      THEN         6         0      none
+ELSE                5      none        -9         1      none
+ELSEIF              5      none        -9         1      none
+SELECT              5      none        -9         0      none
+CASE                5      none        -9         1      none
+WHERE               5      none        -9         0      none
+INTERFACE           5      none        -9         0      none
+
+
+@ Level 4: Declaration
+PRIVATE             4      none        -9         0      none
+PUBLIC              4      none        -9         0      none
+INTEGER             4      none        -9         0      none
+LOGICAL             4      none        -9         0      none
+MODULE              4 PROCEDURE         1         0      none
+REAL                4      none        -9         0      none
+DOUBLE              4      none        -9         0      none
+CHARACTER           4      none        -9         0      none
+TYPE                4         (         5         0      none
+COMMON              4      none        -9         0      none
+SEQUENCE            4      none        -9         0      none
+
+
+@ Level 3: Use, implicit none, include
+USE                 3      none        -9         0      none
+IMPLICIT            3      none        -9         0      none
+INCLUDE             3      none        -9         0      none
+
+
+@ Level 2
+RECURSIVE           2      none        -9         0      none
+PURE                2      none        -9         0      none
+FUNCTION            2      none        -9         0      none
+SUBROUTINE          2      none        -9         0      none
+
+
+@ Level 1
+PROGRAM             1      none        -9         0      none
+MODULE              1      none        -9         0      none
+
+
+@ Level -1
+CONTAINS           -1      none        -9         0      none
+END                -1      none        -9         0      none
+ENDPROGRAM         -1      none        -9         0      none
+ENDMODULE          -1      none        -9         0      none
+ENDFUNCTION        -1      none        -9         0      none
+ENDSUBROUTINE      -1      none        -9         0      none
+ENDTYPE            -1      none        -9         0      none
+ENDDO              -1      none        -9         0      none
+ENDIF              -1      none        -9         0      none
+
+
+@ Level -2
+THEN               -2      none        -9         0      none
+RESULT             -2      none        -9         0      none
+NONE               -2      none        -9         0      none
+ONLY               -2      none        -9         0      none
+:                  -2      none        -9         0      none
+=>                 -2      none        -9         0      none
+PRECISION          -2      none        -9         0      none
+DIMENSION          -2      none        -9         0      none
+KIND               -2      none        -9         0      none
+LEN                -2      none        -9         0      none
+PARAMETER          -2      none        -9         0      none
+OPTIONAL           -2      none        -9         0      none
+ALLOCATABLE        -2      none        -9         0      none
+POINTER            -2      none        -9         0      none
+TARGET             -2      none        -9         0      none
+INTENT             -2      none        -9         0      none
+IN                 -2      none        -9         0      none
+OUT                -2      none        -9         0      none
+INOUT              -2      none        -9         0      none
+PROCEDURE          -2      none        -9         0      none
+::                 -2      none        -9         0      none
+,                  -2      none        -9         0      none
+SIZE               -2      none        -9         0      none
+PRESENT            -2      none        -9         0      none
+ALLOCATED          -2      none        -9         0      none
+ASSOCIATED         -2      none        -9         0      none
+MIN                -2      none        -9         0      none
+MAX                -2      none        -9         0      none
+MOD                -2      none        -9         0      none
+SQRT               -2      none        -9         0      none
+ABS                -2      none        -9         0      none
+SIN                -2      none        -9         0      none
+COS                -2      none        -9         0      none
+TAN                -2      none        -9         0      none
+ASIN               -2      none        -9         0      none
+ACOS               -2      none        -9         0      none
+ATAN               -2      none        -9         0      none
+EXP                -2      none        -9         0      none
+LOG                -2      none        -9         0      none
+LOG10              -2      none        -9         0      none
+INT                -2      none        -9         0      none
+NINT               -2      none        -9         0      none
+FLOOR              -2      none        -9         0      none
+FRACTION           -2      none        -9         0      none
+REAL               -2      none        -9         0      none
+.TRUE.             -2      none        -9         0      none
+.FALSE.            -2      none        -9         0      none
++                  -2      none        -9         0      none
+-                  -2      none        -9         0      none
+*                  -2      none        -9         0      none
+/                  -2      none        -9         0      none
+**                 -2      none        -9         0      none
+%                  -2      none        -9         0      none
+//                 -2      none        -9         0      none
+.EQ.               -2      none        -9         0      none
+.NE.               -2      none        -9         0      none
+.GT.               -2      none        -9         0      none
+.GE.               -2      none        -9         0      none
+.LT.               -2      none        -9         0      none
+.LE.               -2      none        -9         0      none
+==                 -2      none        -9         0      none
+/=                 -2      none        -9         0      none
+>                  -2      none        -9         0      none
+<                  -2      none        -9         0      none
+<=                 -2      none        -9         0      none
+>=                 -2      none        -9         0      none
+.NOT.              -2      none        -9         0      none
+.AND.              -2      none        -9         0      none
+.OR.               -2      none        -9         0      none
+.EQV.              -2      none        -9         0      none
+.NEQV.             -2      none        -9         0      none
+
+
+@ Level -3
+#                  -3      none        -9         0      none
+!                  -3      none        -9         0      none
+1234               -3      none        -9         0      none

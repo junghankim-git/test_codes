@@ -1,0 +1,10 @@
+
+1) apply grid_lpanam.f
+ - output: grid.nc
+
+2) vi main_program.F90:  filename = './grid_240x193.nc'.
+
+3) ./run.exe
+ - output: hycom_0240x0193.nc
+
+4) scrip

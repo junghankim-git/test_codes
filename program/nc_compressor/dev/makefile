@@ -1,0 +1,36 @@
+FC      = gfortran
+FCFLAGS = -O2 -ffree-line-length-none -fcheck=all
+NETCDF_DIR = /app/compilers/gcc/4.7.1/applib1/NETCDF4/4.1.3
+#FC      = ifort
+#FCFLAGS = -O2 -free
+#NETCDF_DIR = /app/compilers/intel/2013.0.028/applib1/NETCDF4/4.1.3
+
+VPATH = /home/jhkim/work/share
+INC_PATH = -I$(VPATH)
+
+SRCS = kinds.F90 list.F90 opt_parser.F90 nc_file_compressor.F90
+OBJS = $(SRCS:.F90=.o)
+MODS = $(SRCS:.F90=.mod)
+
+SRC  = main_program.F90
+EXE  = nc_compressor
+
+NETCDF_INC = $(NETCDF_DIR)/include
+NETCDF_LIB = $(NETCDF_DIR)/lib
+
+EXT_LIBS   = -I$(NETCDF_INC) -L$(NETCDF_LIB) -lnetcdff -lnetcdf
+
+.SUFFIXES:
+.SUFFIXES:.F90 .o
+
+
+build: $(SRC) $(OBJS)
+	$(FC) $(FCFLAGS) $^ -o $(EXE) $(INC_PATH) $(EXT_LIBS)
+
+install: build
+
+clean:
+	rm -f $(OBJS) $(MODS) $(EXE) *.nc
+
+.F90.o:
+	$(FC) $(FCFLAGS) -c $< $(INC_PATH) $(EXT_LIBS)

@@ -1,0 +1,16 @@
+ 
+ # default setting 
+  - capitailize            : True
+  - base horizontal intent : 3
+  - base vertical   intent : 0
+  - vertical intent mark   : !
+ 
+ 
+ # start f90 converter
+  - processing file : ./src/BackgroundMod.F90
+add_cont_line: too many ! mark
+add_cont_line: too many ! mark
+add_cont_line: too many ! mark
+add_cont_line: too many ! mark
+  - processing file : ./src/TestCode.F90
+  - processing file : ./src/CostFunMinMod.F90

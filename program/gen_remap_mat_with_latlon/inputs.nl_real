@@ -1,0 +1,27 @@
+&inputs
+
+ ! scrip input with lat-lon infomations
+ np1     = 4
+ ne1     = 120
+ nprocs1 = 1
+ filename1 = '/scratch/jhkim/TestBed/KIM/Output/2.4/ne120/gnu/10h/SW_G/101/UP-20110725220000-000011.nc'
+ lonname1  = 'lon'
+ latname1  = 'lat'
+
+ np2     = 4
+ ne2     = 30
+ nprocs2 = 1
+ filename2 = '/scratch/jhkim/TestBed/KIM/Output/2.2/ne30/gnu/10h/SW_G/101/UP-20110725220000-000011.nc'
+ lonname2  = 'lon'
+ latname2  = 'lat'
+
+
+ ! scrip file
+ scripfile1 = './scrip_1.nc'
+ scripfile2 = './scrip_2.nc'
+
+ ! remap matrix filename
+ remapfile12 = './remap_12.nc'
+ remapfile21 = './remap_21.nc'
+
+/

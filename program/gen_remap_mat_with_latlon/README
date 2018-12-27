@@ -1,0 +1,20 @@
+
+1) make
+ - run.exe
+
+2) ./run.exe
+ - scrip_1.nc
+ - scrip_2.nc
+ - scrip_in
+
+3) ./scrip
+ - remap_12.nc
+ - remap_21.nc
+
+!4) make remap
+! - remap.exe
+
+5) ./remap.exe < inputs_remap.nl
+ - result.nc
+
+

@@ -1,0 +1,86 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#-------------------------------------------------------------------------------
+#
+#> @brief
+#>  - 
+#>
+#> @date 30MAR2015
+#>  - JH KIM(jh.kim@kiaps.org) : First written.
+#>                               Optional: Compiler (GNU, PGI, Intel)
+#>                               Optional: System   (Gaon2, Gaon1)
+#>                               Optional: Dynamics (KIM-SH, KIM-SW)
+#-------------------------------------------------------------------------------
+
+import sys
+from optparse import OptionParser
+SHARE_DIR=os.environ['PYTHON_SHARE_DIR']
+sys.path.append(SHARE_DIR)
+from LibKIMBase import *
+from LibKIM_h   import *
+
+kimdir = os.getenv('KIMDIR')
+
+
+opt = OptionParser()
+### action: 'store', 'store_const', 'append', 'count', 'callback'
+opt.add_option('-c', '--compiler', dest='compiler',    type='string',  default='gnu',    action='store',   help='Compiler (gnu*, pgi, intel)')
+opt.add_option('-s', '--system',   dest='system',      type='string',  default='gaon2',  action='store',   help='System (gaon2*, gaon1, ..., any)')
+opt.add_option('-d', '--dynamics', dest='dynamics',    type='string',  default='KIM-SW', action='store',   help='Dynamics (KIM-SW*, KIM-SH)')
+opt.add_option('-p', '--pnetcdf',  dest='pnetcdf',     default=False,    action='store_true', help='on/off PNetCDF')
+opt.add_option('-o', '--path',  dest='outpath',        type='string', default='./',     action='store',   help='Path of KIMBase.mk')
+###
+(options, args) = opt.parse_args()
+##
+
+
+compiler = options.compiler.lower()
+if compiler == 'gnu':
+   compiler = 'GNU'
+elif compiler == 'pgi':
+   compiler = 'PGI'
+elif compiler == 'intel':
+   compiler = 'Intel'
+else:
+   print 'Not Support, compiler :', options.compiler
+
+system = options.system.lower()
+if system == 'gaon2':
+   system = 'Gaon2'
+elif system == 'gaon1':
+   system = 'Gaon1'
+elif system == 'tachyon2':
+   system = 'Tachyon2'
+elif system == 'haenam':
+   system = 'Haenam'
+elif system == 'haeon':
+   system = 'Haeon'
+elif system == 'haedam':
+   system = 'Haedam'
+elif system == 'any':
+   system = 'any'
+else:
+   print 'Not Support, system:', options.system
+
+dynamics = 'KIM-SH'
+if options.dynamics == 'KIM-SH':
+   dynamics = 'KIM-SH'
+elif options.dynamics == 'KIM-SW':
+   dynamics = 'KIM-SW'
+else:
+   print 'Not Support, dynamics:', options.dynamics
+
+path = options.outpath
+
+kim = KIMBase(compiler=compiler, system=system, dynamics=dynamics, onPnetCDF=options.pnetcdf)
+kim.SetValues()
+kim.ParsingArgs(args)
+
+#kim.PrintKIMBase()
+kim.WriteKIMBase(path)
+
+kimh = KIM_h(dynamics=dynamics, np=4, nlevs=50, onPnetCDF=options.pnetcdf)
+kimh.SetValues()
+kimh.WriteKIM_h(path)
+
+
