@@ -2,7 +2,7 @@
    module calendar
 !-------------------------------------------------------------------------------
 !
-!  abstract : main program of the coupled system (atm, wav, ocn, ...+cpl)
+!  abstract : a calendar module for NWP(Numerical Weather Prediction)
 !
 !  history log :
 !    2013-01-02   junghan kim     first written
